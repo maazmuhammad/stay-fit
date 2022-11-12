@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "514041579955",
+    "project_id": "stay-fit-d76fd",
+    "storage_bucket": "stay-fit-d76fd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:514041579955:android:f4fd014faf7c0e717823c6",
+        "android_client_info": {
+          "package_name": "com.fypfit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "514041579955-9i3vehofc9pd7ji2m58t7icadbnpihjm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fypfit",
+            "certificate_hash": "ac5690fe2228ffb9b388d8df8c90330bdbf7dbfb"
+          }
+        },
+        {
+          "client_id": "514041579955-a2jtqfbf99ebqpd0es1lrbnk01ar02ch.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fypfit",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "514041579955-e0rfnochttan679vtf5i6ciu05ggdqb9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQlRxo3LpXZ6KFub85XBVI-CeQDuT5jTI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "514041579955-e0rfnochttan679vtf5i6ciu05ggdqb9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

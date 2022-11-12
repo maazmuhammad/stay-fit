@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">fypfit</string>
+    <string name="facebook_app_id">652104416620639</string>
+    <string name="fb_login_protocol_scheme">fb652104416620639</string>
+    <string name="facebook_client_token">b408687202444b334dfa8035d397a8ab</string>
+
+
+</resources>
