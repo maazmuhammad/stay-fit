@@ -6,20 +6,6 @@ import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-si
 import auth from '@react-native-firebase/auth';
 import { useNavigation } from '@react-navigation/native';
 
-//   import { 
-//     Avatar,
-//     Title, 
-//     Caption,
-//     Paragraph,
-//     Drawer,
-//     Text,
-//     TouchableRipple,
-//     Switch
-
-
-
-
-//  } from '@react-native-paper';
 
 
 const styles = StyleSheet.create({
@@ -30,18 +16,12 @@ const styles = StyleSheet.create({
     button1: {
         width: 30,
         height: 30,
-
-
-
-
-
-        //  backgroundColor: 'orange'
     },
 
 })
 
 
-const navigation = useNavigation();
+//const navigation = useNavigation();
 
 const OnLogoutPressed = async () => {
 
@@ -58,7 +38,7 @@ const OnLogoutPressed = async () => {
     } catch (error) {
         console.log(error);
     }
-    navigation.navigate('Login');
+    //navigation.navigate('Login');
 
 
 
@@ -79,7 +59,7 @@ export default function DrawerCon(props) {
         <View >
             <View style={{ flexDirection: 'row' }} >
                
-                <View style={{ backgroundColor: 'red', height: 40, width: 150, marginTop: 20, borderRadius: 10, left: 110 }}>
+                <View style={{ backgroundColor: '#F81250', height: 40, width: 150, marginTop: 20, borderRadius: 10, left: 110 }}>
 
                     <Image
                         style={{
@@ -137,15 +117,7 @@ export default function DrawerCon(props) {
                 </Text>
             </Pressable>
 
-
-
-
-
-
-
-
-
-            <Button style={{ marginBottom: 15, borderRadius: 20, width: '50%', marginHorizontal: 60, alignItems: 'center', marginTop: 300 }} title="Logout" color='#F81250' onPress={() => OnLogoutPressed()} />
+            <Button style={{ marginBottom: 15, borderRadius: 20, width: '50%', marginHorizontal: 60, alignItems: 'center', marginTop: 300 ,color:'#F81250'}} title="Logout" color='#F81250' onPress={() => OnLogoutPressed()} />
 
 
 

@@ -25,7 +25,7 @@ const SmartNutrition = () => {
                             />
 
                         </Pressable>
-                        <Text style={{ fontSize: 34, fontWeight: 'bold', paddingLeft: 10, color: 'white' }}>Smart Nutrition</Text>
+                        <Text style={{ fontSize: 28, fontWeight: 'bold', paddingLeft: 10, color: 'white' }}>Smart Nutrition</Text>
                     </View>
                 </View>
             </View>

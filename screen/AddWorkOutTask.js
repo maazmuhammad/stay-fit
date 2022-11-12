@@ -36,7 +36,7 @@ export default function AddWorkOutTask() {
               />
 
             </Pressable>
-            <Text style={{ fontSize: 34, fontWeight: 'bold', paddingLeft: 10, color: 'white' }}>Workout Task</Text>
+            <Text style={{ fontSize: 28, fontWeight: 'bold', paddingLeft: 10, color: 'white' }}>Workout Task</Text>
           </View>
         </View>
       </View>
@@ -75,6 +75,7 @@ export default function AddWorkOutTask() {
 const styles = StyleSheet.create({
   appContainer: {
     flex: 1,
+    backgroundColor:'black'
     // paddingTop: 50,
     //paddingHorizontal: 16,
 
@@ -100,6 +101,7 @@ const styles = StyleSheet.create({
     width: '70%',
     marginRight: 8,
     padding: 8,
+    color:'white'
     
     
 

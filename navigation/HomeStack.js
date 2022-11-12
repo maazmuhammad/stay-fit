@@ -28,6 +28,7 @@ const HomeNavigation = () => {
         // <NavigationContainer>
             <HomeStack.Navigator screenOptions={{ headerShown: false }}>
                 <HomeStack.Screen name='Home1'component={Home1}/>
+                <HomeStack.Screen name='Dawer' component={DrawerCon}/>
                 <HomeStack.Screen name='Home' component={Home}/>
                 <HomeStack.Screen name='Smart' component={SmartNutrition}/>
 

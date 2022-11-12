@@ -27,8 +27,7 @@ const StackNavigation = () => {
     return (
         // <NavigationContainer>
             <Stack.Navigator screenOptions={{ headerShown: false }}>
-                <Stack.Screen name='Login' component={LogInScreen}/>
-                <Stack.Screen name='Register' component={RegisterSrcee}/>
+                
                 <Stack.Screen name='Home' component={Home}/>
                 <Stack.Screen name='Home1'component={Home1}/>
                 <Stack.Screen name='Smart'component={SmartNutrition}/>

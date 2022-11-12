@@ -30,7 +30,6 @@ const ActivitySummaryNav = () => {
         // <NavigationContainer>
             <SummaryStack.Navigator screenOptions={{ headerShown: false }}>
                 <SummaryStack.Screen name='Home1'component={Home1}/>
-                
             </SummaryStack.Navigator>  
             
     );

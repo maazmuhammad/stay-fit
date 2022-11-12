@@ -40,12 +40,17 @@ const DrawerNav = () => {
         <NavigationContainer>
             {
                 user ?
-                    <Drawer.Navigator screenOptions={{ headerShown: false}} initialRouteName='Home1' drawerContent={props => <DrawerCon {...props} />}>
+                    <Drawer.Navigator screenOptions={{ headerShown: false}}  drawerContent={props => <DrawerCon {...props} />}>
+                        <Drawer.Screen name="Home1" component={HomeNavigation} />
                         <Drawer.Screen name="Home" component={HomeNavigation} />
+                        
+
                         <Drawer.Screen name="Smart" component={ActivitySummaryNav} />
+
                         <Drawer.Screen name="SetGoal" component={SetGoal} />
                         <Drawer.Screen name="DailyTask" component={AddDailyTask} />
                         <Drawer.Screen name="WorkoutTask" component={AddWorkOutTask} />
+
                        
 
                     </Drawer.Navigator>

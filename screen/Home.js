@@ -32,7 +32,7 @@ const Home = () => {
         labels: ["12:00 am", "6:00 am", "12:00 pm", "6:00 pm"],
         datasets: [
             {
-                data: [ 0.7, 0.1, 0.9, 0.3, 0.5]
+                data: [0.7, 0.1, 0.9, 0.3, 0.5]
             }
         ]
     };
@@ -75,16 +75,27 @@ const Home = () => {
 
     }
 
+    // const chartConfig = {
+    //     backgroundGradientFrom: "black",
+    //     backgroundGradientFromOpacity: 1,
+    //     backgroundGradientTo: "black",
+    //     backgroundGradientToOpacity: 0.5,
+    //     color: (opacity = 2) => `rgba(248, 18, 80,${opacity})`,
+    //     strokeWidth: 1, // optional, default 3
+    //     barPercentage: 0.2,
+    //     useShadowColorFromDataset: false // optional
+    // }
     const chartConfig = {
-       // backgroundGradientFrom: "black",
-       // backgroundGradientFromOpacity: 1,
-       // backgroundGradientTo: "black",
-        //backgroundGradientToOpacity: 0.5,
-        color: (opacity = 2) => `rgba(248, 18, 80,${opacity})`,
-        strokeWidth: 1, // optional, default 3
-        barPercentage: 0.2,
-        //useShadowColorFromDataset: false // optional
+        backgroundGradientFrom: "#1E2923",
+        backgroundGradientFromOpacity: 0,
+        backgroundGradientTo: "#08130D",
+        backgroundGradientToOpacity: 0.5,
+        color: (opacity = 1) => `rgba(248, 18, 80,${opacity})`,
+        strokeWidth: 2, // optional, default 3
+        barPercentage: 0.5,
+        useShadowColorFromDataset: false // optional
     };
+
     const graphStyle = {
         //marginVertical: 80,
         ...chartConfig.style
@@ -117,7 +128,7 @@ const Home = () => {
                     <View style={{ backgroundColor: '#F81250', height: 50, width: '90%', marginTop: 10, borderRadius: 10, marginHorizontal: 20, }}>
                         <View style={{ flexDirection: 'row' }}>
 
-                            <Pressable style={{ right: 20}}
+                            <Pressable style={{ right: 20 }}
                                 onPress={() => navigation.openDrawer()}
                             >
                                 <Image
@@ -126,13 +137,13 @@ const Home = () => {
                                 />
 
                             </Pressable>
-                            <Text style={{ fontSize: 32, fontWeight: 'bold', paddingLeft: 10, color: 'white' ,right:22}}>Activity Summary</Text>
+                            <Text style={{ fontSize: 28, fontWeight: 'bold', paddingLeft: 10, color: 'white', right: 25, }}>Activity Summary</Text>
                         </View>
                     </View>
                 </View>
 
             </View>
-            <View style={{ marginTop:10 }}>
+            <View style={{ marginTop: 10 }}>
                 <View style={{ height: 300 }}>
 
 
@@ -144,21 +155,22 @@ const Home = () => {
                         radius={100}
                         chartConfig={chartConfig}
                         hideLegend={false}
-                    />
+                    /> 
+                   
                 </View>
-                <View style={{ top:-30}} >
+                <View style={{ top: -30 }} >
 
 
-                <BarChart
-                    style={graphStyle}
-                    data={data1}
-                    width={screenWidth}
-                    height={160}
-                    chartConfig={chartConfig}
-                    
+                    <BarChart
+                        style={graphStyle}
+                        data={data1}
+                        width={screenWidth}
+                        height={160}
+                        chartConfig={chartConfig}
+
                     />
 
-                    </View>
+                </View>
             </View>
 
             {/* <View>
@@ -169,8 +181,8 @@ const Home = () => {
 
 
             </View> */}
-            <View style={{ flexDirection: 'row', alignItems: 'center' , marginHorizontal:30  }}>
-                <View style={{ backgroundColor: '#ff6666', height: 60, width: 150, borderRadius: 8, marginHorizontal: 10, }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', marginHorizontal: 30 }}>
+                <View style={{ backgroundColor: '#F81250', height: 60, width: 150, borderRadius: 8, marginHorizontal: 10, }}>
                     <Text style={{ fontSize: 18, fontWeight: 'bold', paddingLeft: 10, }}>MOVE:</Text>
                 </View>
 
@@ -186,12 +198,12 @@ const Home = () => {
                     />
                 </View>
             </View>
-            <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10, marginHorizontal:30 }}>
-                <View style={{ backgroundColor: '#ff6666', height: 60, width: 150, marginTop: 10, borderRadius: 8, marginHorizontal: 10, }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10, marginHorizontal: 30 }}>
+                <View style={{ backgroundColor: '#F81250', height: 60, width: 150, marginTop: 10, borderRadius: 8, marginHorizontal: 10, }}>
                     <Text style={{ fontSize: 18, fontWeight: 'bold', paddingLeft: 10, }}>Steps:</Text>
                 </View>
 
-                <View style={{ backgroundColor: '#ff6666', height: 60, width: 150, marginTop: 10, borderRadius: 8, }}>
+                <View style={{ backgroundColor: '#F81250', height: 60, width: 150, marginTop: 10, borderRadius: 8, }}>
                     <Text style={{ fontSize: 18, fontWeight: 'bold', paddingLeft: 10, }}>Distance:</Text>
 
                 </View>
@@ -199,7 +211,7 @@ const Home = () => {
 
             {/* <Button style={{width:'90%'}} title="Logout" color="red"  /> */}
             {/* <Button title="Logout" onPress={() => OnLogoutPressed()} style={{ width: "90%", marginTop: 10,backgroundColor: '#b30000',marginLeft:20  }} /> */}
-            <Button title="View More" onPress={() => OnNavigateHome1()} style={{ width: "80%",  backgroundColor: '#b30000', marginLeft: 40,  }} />
+            <Button title="View More" onPress={() => OnNavigateHome1()} style={{ width: "80%", backgroundColor: '#F81250', marginLeft: 40, }} />
         </View>
 
 

@@ -20,15 +20,16 @@ const SetGoal = () => {
     }
     const navigation = useNavigation();
     const chartConfig = {
-        backgroundGradientFrom: "black",
-        backgroundGradientFromOpacity: 1,
-        backgroundGradientTo: "black",
+        backgroundGradientFrom: "#1E2923",
+        backgroundGradientFromOpacity: 0,
+        backgroundGradientTo: "#08130D",
         backgroundGradientToOpacity: 0.5,
-        color: (opacity = 4) => `rgba(247, 25, 25, ${opacity})`,
-        strokeWidth: 1, // optional, default 3
+        color: (opacity = 1) => `rgba(248, 18, 80,${opacity})`,
+        strokeWidth: 2, // optional, default 3
         barPercentage: 0.5,
         useShadowColorFromDataset: false // optional
     };
+
 
 
 
@@ -90,7 +91,8 @@ const SetGoal = () => {
                         padding: 8,
                         borderRadius: 10, 
                         fontSize:32,
-                        fontWeight:'bold'
+                        fontWeight:'bold',
+                        color:"white"
                      }}
                     >
 
@@ -102,7 +104,7 @@ const SetGoal = () => {
                     style={styles.roundButton2}
                     
                     >
-                    <Text style={{  fontWeight: 'bold', color: '#F81250', fontSize: 32,  }}>Set</Text>
+                    <Text style={{  fontWeight: 'bold', color: '#F81250', fontSize:25 ,alignSelf:'center' }}>Set</Text>
                 </TouchableOpacity>
                     </View> 
                     

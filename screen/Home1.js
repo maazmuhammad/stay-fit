@@ -52,15 +52,31 @@ const Home1 = () => {
 
 
         <View style={{ flex: 1, }}>
-            <Pressable style={{ backgroundColor: 'black' }}
-                onPress={() => navigation.openDrawer()}
-            >
-                <Image
-                    style={styles.button1}
-                    source={require('../assests/image/menu.png')}
-                />
 
-            </Pressable>
+            <View style={{backgroundColor:'black'}}>
+
+
+                <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
+                    <View style={{ backgroundColor: '#F81250', height: 50, width: '90%', marginTop: 10, borderRadius: 10, marginHorizontal: 20, }}>
+                        <View style={{ flexDirection: 'row' }}>
+
+                            <Pressable style={{ right: 20 }}
+                                onPress={() => navigation.openDrawer()}
+                            >
+                                <Image
+                                    style={styles.button1}
+                                    source={require('../assests/image/menu.png')}
+                                />
+
+                            </Pressable>
+                            <Text style={{ fontSize: 28, fontWeight: 'bold', paddingLeft: 10, color: 'white', right: 25,left:20 }}>Home</Text>
+                        </View>
+                    </View>
+                </View>
+
+            </View>
+
+
 
 
 
