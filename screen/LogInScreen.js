@@ -8,6 +8,8 @@ import auth from '@react-native-firebase/auth';
 import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
 import { useState } from 'react';
 import { LoginManager, AccessToken } from 'react-native-fbsdk-next';
+import firestore from '@react-native-firebase/firestore';
+
 
 
 
@@ -19,6 +21,7 @@ const EMAIL_REGEX = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/
 const Password_REGEX = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/
 
 
+
 const LogInScreen = () => {
     const inputRef = useRef(null)
     const emailinputRef = useRef(null)
@@ -27,6 +30,9 @@ const LogInScreen = () => {
     const [useData, setUserData] = useState({});
     const [userData, setUseData] = useState({})
     const [modalVisible, setModalVisible] = React.useState(false);
+
+    
+
 
 
 
@@ -51,7 +57,6 @@ const LogInScreen = () => {
         else {
             auth().signInWithEmailAndPassword(Email, Password)
                 .then(() => {
-
 
                     console.log("login successful")
                     // navigation.navigate('Home1');
@@ -223,7 +228,7 @@ const LogInScreen = () => {
                             .then(res => {
                                 console.log(res.user);
                                 setUserData(res.user);
-                               // navigation.navigate('Home1');
+                                // navigation.navigate('Home1');
                             })
                             .catch(
                                 error => console.error(error))
@@ -240,7 +245,7 @@ const LogInScreen = () => {
                             .then(res => {
                                 //console.log(res.data);
                                 setUseData(res.data);
-                               // navigation.navigate('Home1');
+                                // navigation.navigate('Home1');
                             })
                             .catch(
                                 error => console.error(error))

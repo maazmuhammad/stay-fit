@@ -41,8 +41,8 @@ const Home = () => {
 
     const navigation = useNavigation();
 
-    const OnNavigateHome1 = async () => {
-        navigation.navigate('Home1');
+    const OnViewMore = async () => {
+        navigation.navigate('More');
 
 
     }
@@ -75,16 +75,6 @@ const Home = () => {
 
     }
 
-    // const chartConfig = {
-    //     backgroundGradientFrom: "black",
-    //     backgroundGradientFromOpacity: 1,
-    //     backgroundGradientTo: "black",
-    //     backgroundGradientToOpacity: 0.5,
-    //     color: (opacity = 2) => `rgba(248, 18, 80,${opacity})`,
-    //     strokeWidth: 1, // optional, default 3
-    //     barPercentage: 0.2,
-    //     useShadowColorFromDataset: false // optional
-    // }
     const chartConfig = {
         backgroundGradientFrom: "#1E2923",
         backgroundGradientFromOpacity: 0,
@@ -105,24 +95,7 @@ const Home = () => {
 
         <View style={styles.container}>
             <View>
-                {/* <Pressable style={{ backgroundColor: 'black' }}
-            onPress={()=>navigation.openDrawer()}
-            >
-                <Image
-                    style={styles.button1}
-                    source={require('../assests/image/menu.png')}
-                />
-
-            </Pressable>
-
-                <Pressable
-                    onPress={() => onCalendar()}>
-                    <Image
-                        style={styles.button}
-                        source={require('../assests/image/calendar.png')}
-                    />
-
-                </Pressable> */}
+                
 
                 <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
                     <View style={{ backgroundColor: '#F81250', height: 50, width: '90%', marginTop: 10, borderRadius: 10, marginHorizontal: 20, }}>
@@ -173,17 +146,10 @@ const Home = () => {
                 </View>
             </View>
 
-            {/* <View>
-                <View>{setUserData.photoURL}</View>
-                <Text>NAME:MUHAMMAD MAAZ<Text>{setUserData.displayNAME}</Text></Text>
-                <Text>UID:9906<Text>{setUserData.uid}</Text></Text>
-                <Text>Email:maazmuhammad88@gmail.com<Text>{setUserData.email}</Text></Text>
-
-
-            </View> */}
+            
             <View style={{ flexDirection: 'row', alignItems: 'center', marginHorizontal: 30 }}>
                 <View style={{ backgroundColor: '#F81250', height: 60, width: 150, borderRadius: 8, marginHorizontal: 10, }}>
-                    <Text style={{ fontSize: 18, fontWeight: 'bold', paddingLeft: 10, }}>MOVE:</Text>
+                    <Text style={{ fontSize: 18, fontWeight: 'bold', paddingLeft: 10,color:'white' }}>MOVE:</Text>
                 </View>
 
                 <View style={{ backgroundColor: 'red', height: 60, width: 150, borderRadius: 8, }}>
@@ -200,18 +166,17 @@ const Home = () => {
             </View>
             <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10, marginHorizontal: 30 }}>
                 <View style={{ backgroundColor: '#F81250', height: 60, width: 150, marginTop: 10, borderRadius: 8, marginHorizontal: 10, }}>
-                    <Text style={{ fontSize: 18, fontWeight: 'bold', paddingLeft: 10, }}>Steps:</Text>
+                    <Text style={{ fontSize: 18, fontWeight: 'bold', paddingLeft: 10,color:'white' }}>Steps:</Text>
                 </View>
 
                 <View style={{ backgroundColor: '#F81250', height: 60, width: 150, marginTop: 10, borderRadius: 8, }}>
-                    <Text style={{ fontSize: 18, fontWeight: 'bold', paddingLeft: 10, }}>Distance:</Text>
+                    <Text style={{ fontSize: 18, fontWeight: 'bold', paddingLeft: 10,color:'white' }}>Distance:</Text>
 
                 </View>
             </View>
 
-            {/* <Button style={{width:'90%'}} title="Logout" color="red"  /> */}
-            {/* <Button title="Logout" onPress={() => OnLogoutPressed()} style={{ width: "90%", marginTop: 10,backgroundColor: '#b30000',marginLeft:20  }} /> */}
-            <Button title="View More" onPress={() => OnNavigateHome1()} style={{ width: "80%", backgroundColor: '#F81250', marginLeft: 40, }} />
+           
+            <Button title="View More" onPress={() => OnViewMore()} style={{ width: "80%", backgroundColor: '#F81250', marginLeft: 40, }} />
         </View>
 
 

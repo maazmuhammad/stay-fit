@@ -1,6 +1,8 @@
 import React from 'react';
 import { View, StyleSheet, Text, Button, TouchableOpacity, Pressable, Image, SafeAreaView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { useEffect } from 'react';
+import firestore from '@react-native-firebase/firestore'
 
 
 
@@ -11,6 +13,10 @@ import { useNavigation } from '@react-navigation/native';
 
 
 const Home1 = () => {
+
+    useEffect(() => {
+        setUserData();
+    }, [])
 
 
     const navigation = useNavigation();
@@ -45,7 +51,25 @@ const Home1 = () => {
 
     }
 
-
+    const setUserData =  () => {
+        console.log("new=============--------------")
+         firestore()
+        .collection('Users')
+        // .get()
+        // .add()
+        .add({
+            name: 'Ada Lovelace',
+            age: 30,
+        })
+        .then((r) => {
+            console.log('User added!');
+        })
+        .catch((e)=>{
+            console.log(e,'eeeee added!');
+        })
+        console.log("new 22222222222222222222222=============--------------")
+    }
+    
 
 
     return (
@@ -53,7 +77,7 @@ const Home1 = () => {
 
         <View style={{ flex: 1, }}>
 
-            <View style={{backgroundColor:'black'}}>
+            <View style={{ backgroundColor: 'black' }}>
 
 
                 <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
@@ -69,7 +93,7 @@ const Home1 = () => {
                                 />
 
                             </Pressable>
-                            <Text style={{ fontSize: 28, fontWeight: 'bold', paddingLeft: 10, color: 'white', right: 25,left:20 }}>Home</Text>
+                            <Text style={{ fontSize: 28, fontWeight: 'bold', paddingLeft: 10, color: 'white', right: 25, left: 20 }}>Home</Text>
                         </View>
                     </View>
                 </View>

@@ -14,6 +14,8 @@ import RegisterSrcee from '../screen/RegisterScree';
 import Home from '../screen/Home';
 import Home1 from '../screen/Home1';
 import SmartNutrition from '../screen/SmartNutrition'
+import ViewMore from '../screen/ViewMore';
+
 
 
 
@@ -30,7 +32,12 @@ const StackNavigation = () => {
                 
                 <Stack.Screen name='Home' component={Home}/>
                 <Stack.Screen name='Home1'component={Home1}/>
+                <Stack.Screen name='More'component={ViewMore}/>
+                <Stack.Screen name='Calendar'component={Calender}/>
+
+
                 <Stack.Screen name='Smart'component={SmartNutrition}/>
+                
             </Stack.Navigator>  
             
     );

@@ -7,16 +7,34 @@ import {
 import { Dimensions } from "react-native";
 import { useNavigation } from '@react-navigation/native';
 import { Flex } from '@react-native-material/core';
+import firestore from '@react-native-firebase/firestore';
+import add from 'add';
 
 const SetGoal = () => {
     const [Goal, SetGoal] = React.useState('');
     const screenWidth = Dimensions.get("window").width
     const data = {
-        labels: ["Run"], // optional
+        // labels: ["Run"], // optional
         data: [0.7]
     };
-    const SaveGoal = () => {
+    // const SaveGoal = () => {
 
+    // }
+
+    const SaveGoal = () => {
+        try {
+           // console.log("1123123=============--------------")
+            firestore()
+             
+                .collection('SetGoal')
+                .doc(Goal)
+                
+                .then(() => {
+                    console.log('Goal  added!');
+                })
+        } catch (error) {
+            console.log(error, 'firebase collection err')
+        }
     }
     const navigation = useNavigation();
     const chartConfig = {
