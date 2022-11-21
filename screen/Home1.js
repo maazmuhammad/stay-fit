@@ -14,9 +14,9 @@ import firestore from '@react-native-firebase/firestore'
 
 const Home1 = () => {
 
-    useEffect(() => {
-        setUserData();
-    }, [])
+    // useEffect(() => {
+    //     setUserData();
+    // }, [])
 
 
     const navigation = useNavigation();
@@ -51,24 +51,24 @@ const Home1 = () => {
 
     }
 
-    const setUserData =  () => {
-        console.log("new=============--------------")
-         firestore()
-        .collection('Users')
-        // .get()
-        // .add()
-        .add({
-            name: 'Ada Lovelace',
-            age: 30,
-        })
-        .then((r) => {
-            console.log('User added!');
-        })
-        .catch((e)=>{
-            console.log(e,'eeeee added!');
-        })
-        console.log("new 22222222222222222222222=============--------------")
-    }
+    // const setUserData =  () => {
+    //     console.log("new=============--------------")
+    //      firestore()
+    //     .collection('Users')
+    //     // .get()
+    //     // .add()
+    //     .add({
+    //         name: 'Ada Lovelace',
+    //         age: 30,
+    //     })
+    //     .then((r) => {
+    //         console.log('User added!');
+    //     })
+    //     .catch((e)=>{
+    //         console.log(e,'eeeee added!');
+    //     })
+    //     console.log("new 22222222222222222222222=============--------------")
+    // }
     
 
 

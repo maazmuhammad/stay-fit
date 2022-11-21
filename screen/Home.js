@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, } from 'react';
-import { View, StyleSheet, Image, Text, TouchableOpacity, Keyboard, Pressable, Touchable } from 'react-native';
+import { View, StyleSheet, Image, Text, TouchableOpacity, Keyboard, Pressable, Touchable, ActivityIndicator } from 'react-native';
 import { TextInput, Button, } from "@react-native-material/core";
 import { useNavigation } from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
@@ -12,6 +12,8 @@ import {
 import { Dimensions } from "react-native";
 import 'react-native-gesture-handler';
 
+import { connect } from "react-redux";
+import { GetUserFitnessData } from "../Redux/User/UserAction"
 
 
 
@@ -19,10 +21,13 @@ import 'react-native-gesture-handler';
 
 
 
-const Home = () => {
+const Home = (props) => {
     // const [user, setState] = useState('');
+
     const [UserData, setUserData] = useState({});
-    const screenWidth = Dimensions.get("window").width
+    const screenWidth = Dimensions.get("window").width;
+
+   
 
     const data = {
         labels: ["Run"], // optional
@@ -46,34 +51,52 @@ const Home = () => {
 
 
     }
-    const OnLogoutPressed = async () => {
+    // const OnLogoutPressed = async () => {
 
-        try {
-            // await GoogleSignin.hasPlayServices();
-            // const userInfo = await GoogleSignin.signIn();
-            // this.setState({ userInfo });
+    //     try {
+    //         // await GoogleSignin.hasPlayServices();
+    //         // const userInfo = await GoogleSignin.signIn();
+    //         // this.setState({ userInfo });
 
-            GoogleSignin.signOut();
-            auth().signOut();
-            console.log("Sign out successfull")
+    //         GoogleSignin.signOut();
+    //         auth().signOut();
+    //         console.log("Sign out successfull")
 
-            this.setState({ user: null }); // Remember to remove the user from your app's state as well
-        } catch (error) {
-            console.log(error);
-        }
-        navigation.navigate('Login');
-
-
-
-    }
-    const onCalendar = async () => {
-
-    }
-    const onDrawer = async () => {
+    //         this.setState({ user: null }); // Remember to remove the user from your app's state as well
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    //     navigation.navigate('Login');
 
 
 
-    }
+    // }
+    // const onCalendar = async () => {
+
+    // }
+    // const onDrawer = async () => {
+
+
+
+    // }
+
+    // const getSteps = async () => {
+    //     console.log('running get steps...')
+    //     try {
+    //         // fetch({
+    //         //     method: 'GET',
+    //         //     url: 'https://www.googleapis.com/fitness/v1/users/me/dataSources',
+    //         //     headers: {
+    //         //         'Authorization': `Bearer ya29.a0AeTM1ifOcSywXIDf_y0tFiaIrTmhnyYcBw2pkL3NLuaJfUXTU_aDI_Dfi7tfhMj7n70atVgUypdzFmn9-LdRJlkg4AYjMhVDOxZpb8nY6jEmdF1AB0ZF_xjoyl3ie0ceLw6SNtNJaQbi5HHEArmVTNBNHQkfyAaCgYKAY8SARMSFQHWtWOmMMUVyg_gQVjdSBPqOh4F2g0165`
+
+    //         //     }
+    //         // })
+    //         const _data = await fetch("https://api.publicapis.org/entries")
+    //         console.log("AAAAAAAAAAa: ", _data)
+    //     } catch (error) {
+    //         console.log(error,'error in get steps')
+    //     }
+    // }
 
     const chartConfig = {
         backgroundGradientFrom: "#1E2923",
@@ -91,11 +114,19 @@ const Home = () => {
         ...chartConfig.style
     };
 
+
+    useEffect(() => {
+        props.GetFitnessData("ya29.a0AeTM1ifF4MXp_bBESDP1RsVn6mSSKVt8Z7fxlsCMIHHuSQtRco8hUWmhEwyiKYP_rxWpfMvq4AbMB7IJv8vbSAUQhFjOCcXEgMTxtPN59rijRI6iyx3Hw3MYLdfz8D3rRUeP_GE-RybH6lwN7-ZgkAvlidcn8AaCgYKAYUSARMSFQHWtWOm1wU-_SP1FKWbn83Y7nyOHQ0165")
+
+    }, []);
+
+
+
     return (
 
         <View style={styles.container}>
             <View>
-                
+
 
                 <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
                     <View style={{ backgroundColor: '#F81250', height: 50, width: '90%', marginTop: 10, borderRadius: 10, marginHorizontal: 20, }}>
@@ -128,8 +159,8 @@ const Home = () => {
                         radius={100}
                         chartConfig={chartConfig}
                         hideLegend={false}
-                    /> 
-                   
+                    />
+
                 </View>
                 <View style={{ top: -30 }} >
 
@@ -146,10 +177,17 @@ const Home = () => {
                 </View>
             </View>
 
-            
+
             <View style={{ flexDirection: 'row', alignItems: 'center', marginHorizontal: 30 }}>
                 <View style={{ backgroundColor: '#F81250', height: 60, width: 150, borderRadius: 8, marginHorizontal: 10, }}>
-                    <Text style={{ fontSize: 18, fontWeight: 'bold', paddingLeft: 10,color:'white' }}>MOVE:</Text>
+                    <Text style={{ fontSize: 18, fontWeight: 'bold', paddingLeft: 10, color: 'white' }}>
+                        Steps:
+
+                        {props.steps}
+                        
+                
+                        
+                    </Text>
                 </View>
 
                 <View style={{ backgroundColor: 'red', height: 60, width: 150, borderRadius: 8, }}>
@@ -166,16 +204,16 @@ const Home = () => {
             </View>
             <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10, marginHorizontal: 30 }}>
                 <View style={{ backgroundColor: '#F81250', height: 60, width: 150, marginTop: 10, borderRadius: 8, marginHorizontal: 10, }}>
-                    <Text style={{ fontSize: 18, fontWeight: 'bold', paddingLeft: 10,color:'white' }}>Steps:</Text>
+                    <Text style={{ fontSize: 18, fontWeight: 'bold', paddingLeft: 10, color: 'white' }}>Calories</Text>
                 </View>
 
                 <View style={{ backgroundColor: '#F81250', height: 60, width: 150, marginTop: 10, borderRadius: 8, }}>
-                    <Text style={{ fontSize: 18, fontWeight: 'bold', paddingLeft: 10,color:'white' }}>Distance:</Text>
+                    <Text style={{ fontSize: 18, fontWeight: 'bold', paddingLeft: 10, color: 'white' }}>Distance:</Text>
 
                 </View>
             </View>
 
-           
+
             <Button title="View More" onPress={() => OnViewMore()} style={{ width: "80%", backgroundColor: '#F81250', marginLeft: 40, }} />
         </View>
 
@@ -215,6 +253,20 @@ const styles = StyleSheet.create({
         //  backgroundColor: 'orange'
     },
 })
+const mapStateToProps = (store) => (
+    {
+    loading: store.user.loading,
+    steps: store.user.steps,
+}
+);
 
-export default Home;
+
+const mapDispatchToProps = (dispatch) => ({
+    GetFitnessData: (token) => dispatch(GetUserFitnessData(token))
+   
+
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
+//export default Home;
 

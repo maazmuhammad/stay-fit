@@ -9,6 +9,7 @@ import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-si
 import { useState } from 'react';
 import { LoginManager, AccessToken } from 'react-native-fbsdk-next';
 import firestore from '@react-native-firebase/firestore';
+import axios from 'axios';
 
 
 
@@ -31,10 +32,15 @@ const LogInScreen = () => {
     const [userData, setUseData] = useState({})
     const [modalVisible, setModalVisible] = React.useState(false);
 
-    
 
 
 
+    useEffect(() => {
+        console.log('login');
+        
+    }, []);
+
+   
 
     const navigation = useNavigation();
     // const OnLoginPressed = async (Email, Password) => {
@@ -44,16 +50,17 @@ const LogInScreen = () => {
 
     const OnLoginPressed = async (Email, Password) => {
         console.log(Email, Password)
-        if (!Email.match(EMAIL_REGEX)) {
+        // if (!Email.match(EMAIL_REGEX)) {
 
-            alert("Please enter valid email")
-        }
-        else if (Email?.trim().length == 0) {
+        //     alert("Please enter valid email")
+        // }
+        
+         if (Email?.trim().length == 0) {
             alert("Please enter email")
         }
-        else if (!Password.match(Password_REGEX)) {
-            alert("Invalid Password")
-        }
+        // else if (!Password.match(Password_REGEX)) {
+        //     alert("Invalid Password")
+        // }
         else {
             auth().signInWithEmailAndPassword(Email, Password)
                 .then(() => {

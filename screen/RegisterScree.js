@@ -43,16 +43,16 @@ const RegisterSrcee = () => {
             alert("Please enter Full Name")
 
         }
-        else if (!Email.match(EMAIL_REGEX)) {
+        // else if (!Email.match(EMAIL_REGEX)) {
 
-            alert("Please enter valid email")
-        }
+        //     alert("Please enter valid email")
+        // }
         else if (Email?.trim().length == 0) {
             alert("Please enter email")
         }
-        else if (!Password.match(Password_REGEX)) {
-            alert("Password Must Contain Minimum eight characters, at least one uppercase letter, one lowercase letter and one number and one special character")
-        }
+        // else if (!Password.match(Password_REGEX)) {
+        //     alert("Password Must Contain Minimum eight characters, at least one uppercase letter, one lowercase letter and one number and one special character")
+        // }
         else {
             auth().createUserWithEmailAndPassword(Email, Password)
                 .then(() => {

@@ -15,6 +15,7 @@ import StackNavigation from '../navigation/index'
 import HomeNavigation from './HomeStack';
 import ActivitySummaryNav from './ActivitySummaryNav';
 import ViewMore from '../screen/ViewMore';
+import InAppGoogleSignin from '../screen/InAppGoogleSigin';
 import firestore from '@react-native-firebase/firestore';
 
 
@@ -30,26 +31,61 @@ const DrawerNav = () => {
 
     const [user, setUser] = useState(null)
 
-    const setUserData = () => {
-        try {
-           // console.log("1123123=============--------------")
-            firestore()
-                .collection('users')
-                .doc(user.uid)
-                .then(() => {
-                    console.log('User added!');
-                })
-        } catch (error) {
-            console.log(error, 'firebase collection err')
-        }
-    }
+    // const setUserData = (currentUser) => {
+    //     try {
+    //         // console.log("1123123=============--------------")
+    //         // console.log(currentUser, "check userr")
+    //         // firestore()
+    //         //     .collection('users')
+    //         //     .doc(currentUser?.uid)
+    //         //     .set(
+    //         //         {
+    //         //             email: currentUser.email,
+    //         //             uid: currentUser.uid,
+    //         //             name: currentUser.displayName
+    //         //         }
+    //         //     )
+    //         //     .then((res) => {
+    //         //         console.log('User added!', res);
+    //         //     })
+    //         //     .catch(err)
+    //         //     {
+    //         //         console.log(err,"firebase error")
+    //         //     }
+
+    //         // firestore()
+    //         // .collection('Users')
+    //         // .get()
+    //         // .then(querySnapshot => {
+    //         //   console.log('Total users: ', querySnapshot.size);
+          
+    //         //   querySnapshot.forEach(documentSnapshot => {
+    //         //     console.log('User ID: ', documentSnapshot.id, documentSnapshot.data());
+    //         //   });
+    //         // });
+    //         // firestore()
+    //         //     .collection('checkUsers')
+    //         //     .add({
+    //         //         name: 'Ada Lovelace',
+    //         //         age: 30,
+    //         //     })
+    //         //     .then(() => {
+    //         //         console.log('User added!');
+    //         //     })
+    //         //     .catch(err => console.log(err,"error 62"))
+
+    //     } catch (error) {
+    //         console.log(error, 'firebase collection err')
+    //          err
+    //     }
+    // }
 
     useEffect(() => {
         auth().onAuthStateChanged((user) => {
             if (user) {
                 console.log(user, "user--------------")
                 setUser(user)
-                setUserData()
+               // setUserData(user)
             }
         })
     }, []);
@@ -61,7 +97,7 @@ const DrawerNav = () => {
                 user ?
                     <Drawer.Navigator screenOptions={{ headerShown: false }} drawerContent={props => <DrawerCon {...props} />}>
                         <Drawer.Screen name="Home1" component={HomeNavigation} />
-                        {/* <Drawer.Screen name="Home" component={HomeNavigation} /> */}
+                        <Drawer.Screen name="GoogleSigin" component={InAppGoogleSignin } />
 
 
                         <Drawer.Screen name="Smart" component={ActivitySummaryNav} />
@@ -72,6 +108,7 @@ const DrawerNav = () => {
                         <Drawer.Screen name="SetGoal" component={SetGoal} />
                         <Drawer.Screen name="DailyTask" component={AddDailyTask} />
                         <Drawer.Screen name="WorkoutTask" component={AddWorkOutTask} />
+
 
 
 
