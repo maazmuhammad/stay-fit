@@ -6,6 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import MyModal from '../component/modal';
 import auth from '@react-native-firebase/auth';
 import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
+
 import { useState } from 'react';
 import { LoginManager, AccessToken } from 'react-native-fbsdk-next';
 import firestore from '@react-native-firebase/firestore';
@@ -36,7 +37,7 @@ const LogInScreen = () => {
 
 
     useEffect(() => {
-        console.log('login');
+     //   console.log('login');
         
     }, []);
 
@@ -149,6 +150,7 @@ const LogInScreen = () => {
             await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
             // Get the users ID token
             const { idToken } = await GoogleSignin.signIn();
+           // GoogleSignin.addScopes()
 
             // Create a Google credential with the token
             const googleCredential = auth.GoogleAuthProvider.credential(idToken);
@@ -246,7 +248,7 @@ const LogInScreen = () => {
                         />
 
                     </Pressable>
-
+ 
                     <Pressable
                         onPress={() => onFacebookButtonPress()
                             .then(res => {

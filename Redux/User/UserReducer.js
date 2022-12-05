@@ -1,10 +1,17 @@
+import { setDistance } from "./UserAction";
 import {
     SET_CURRENT_USER,
     SET_LOADING,
     SET_ERROR,
     SET_LOGOUT,
     SET_USER_FITNESS_DATA,
-    SET_STEPS
+    SET_STEPS,
+    SET_CALORIES,
+    SET_DISTANCE,
+    SET_HEART_POINT,
+    SET_ACCESS_TOKEN,
+
+    
 } from "./UserTypes";
 
 
@@ -15,13 +22,17 @@ const initialState = {
     error: null,
     currentUser: {},
     userFitnessData: {},
-    setSteps:{}
+    setSteps:{},
+    setCalories:{},
+    setDistance:{},
+    SetHeartPoint:{},
+    setAccessToken:{},
 };
 
 
 const userReducer = (state = initialState, action) => {
-    const { payload, type,steps } = action;
-    console.log(action,'actions')
+    const { payload, type,steps,calories,distance,heartpoint,accesstoken } = action;
+  //  console.log(action,'actions')
     switch (type) {
         case SET_CURRENT_USER:
             return {
@@ -57,7 +68,23 @@ const userReducer = (state = initialState, action) => {
         case SET_STEPS:
             return {
                 ...state,steps
-            }
+            };
+        case SET_CALORIES:
+            return{
+                ...state,calories
+            }    
+        case SET_DISTANCE:
+            return{
+                ...state,distance
+            } 
+        case SET_HEART_POINT:
+            return{
+                ...state,heartpoint
+            }   
+        case SET_ACCESS_TOKEN:
+            return{
+                ...state,accesstoken
+            }         
         default:
             return state;
     }

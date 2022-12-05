@@ -77,30 +77,31 @@ const SetGoal = () => {
             </View>
 
 
-            <View style={{ height: 300, }}>
+            <View style={{ }}>
 
-
-                <ProgressChart
-                    data={data}
-                    width={screenWidth}
-                    height={300}
-                    strokeWidth={50}
-                    radius={100}
-                    chartConfig={chartConfig}
-                    hideLegend={false}
-                />
+            <ProgressChart
+                        data={data}
+                        width={screenWidth}
+                        height={250}
+                        strokeWidth={50}
+                        radius={90}
+                        chartConfig={chartConfig}
+                        hideLegend={false}
+                    />
             </View>
             <View style={{ justifyContent: 'center', alignContent: 'center', flex: 1 }}>
 
                 <View>
-                    <Text style={{ fontSize: 50, fontWeight: 'bold', color: 'white', marginTop: 10, marginHorizontal: 10, marginBottom: 20 }}>Set Steps:</Text>
+                    <Text style={{ fontSize: 40, fontWeight: 'bold', color: 'red', marginTop: 10, marginHorizontal: 15, textAlign:'center'  }}>Set Steps:</Text>
+                    <Text style={{ fontSize: 20, fontWeight: 'bold', color: 'white', marginTop: 10, marginHorizontal: 10,  textAlign:'center' }}>Set your numbers of steps for today</Text>
                 </View>
-                 <View style={{flexDirection:'row' , alignItems:'center'}}>
+                 <View style={{flexDirection:'row' , alignItems:'center', padding:20}}>
 
                 <TextInput
                     onChangeText={(Goal) => SetGoal(Goal)}
                     keyboardType='numeric'
                     maxLength={4}
+                    placeholder="min steps 5K"
                     
                     style={{ borderWidth: 6,
                         borderColor: '#F81250',
@@ -110,7 +111,8 @@ const SetGoal = () => {
                         borderRadius: 10, 
                         fontSize:32,
                         fontWeight:'bold',
-                        color:"white"
+                        color:"white",
+                        placeholdertfontSize:'16'
                      }}
                     >
 
@@ -140,7 +142,7 @@ const styles = StyleSheet.create({
         
         width: 80,
         height: 80,
-        padding: 10,
+        padding: 15,
         borderRadius: 100,
         borderWidth:6,
         borderColor:'#F81250',

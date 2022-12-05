@@ -3,4 +3,9 @@ export const SET_USER_FITNESS_DATA = "SET_USER_FITNESS_DATA";
 export const SET_LOADING = "SET_LOADING";
 export const SET_ERROR = "SET_ERROR";
 export const SET_LOGOUT = "SET_LOGOUT";
-export const SET_STEPS='SET_STEPS'
+export const SET_STEPS='SET_STEPS';
+export const SET_CALORIES='SET_CALORIES';
+export const SET_DISTANCE= 'SET_DISTANCE';
+export const SET_HEART_POINT='SET_HEART_POINT';
+export const SET_ACCESS_TOKEN='SET_ACCESS_TOKEN';
+
