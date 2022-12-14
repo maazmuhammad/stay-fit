@@ -9,6 +9,7 @@ import {
     SET_DISTANCE,
     SET_HEART_POINT,
     SET_ACCESS_TOKEN,
+    LOGIN_TYPE,
 } from "./UserTypes";
 import axios from "axios";
 import moment from "moment";
@@ -83,7 +84,12 @@ export const setAccessToken = (accesstoken) => {
     }
 }
 
-
+export const setLoginType = (loginType) => {
+    return {
+        type: LOGIN_TYPE,
+        loginType,
+    }
+}
 
 
 

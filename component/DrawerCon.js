@@ -21,9 +21,9 @@ const styles = StyleSheet.create({
 })
 
 
-//const navigation = useNavigation();
 
-const OnLogoutPressed = async () => {
+const OnLogoutPressed = async (props) => {
+    // const navigation = useNavigation();
 
     try {
         // await GoogleSignin.hasPlayServices();
@@ -33,12 +33,13 @@ const OnLogoutPressed = async () => {
         GoogleSignin.signOut();
         auth().signOut();
         console.log("Sign out successfull")
+       props.navigation.navigate('Login')
 
         // this.setState({ user: null }); // Remember to remove the user from your app's state as well
     } catch (error) {
         console.log(error);
     }
-    //navigation.navigate('Login');
+    // navigation.navigate('Login');
 
 
 
@@ -73,8 +74,8 @@ export default function DrawerCon(props) {
                     />
                 </View>
             </View>
-            <Text style={{ fontSize: 17, fontWeight: 'bold', marginTop: 20, marginBottom: 20 }}>
-                USER NAME
+            <Text style={{ fontSize: 30, fontWeight: 'bold', marginTop: 20, marginBottom: 20,padding:10,color:'red'}}>
+                Hey! {auth().currentUser.displayName}
             </Text>
 
             <Pressable onPress={() => props.navigation.navigate('SetGoal')} style={{ marginHorizontal: 20, flexDirection: 'row', marginTop: 10, }}>
@@ -117,7 +118,7 @@ export default function DrawerCon(props) {
                 </Text>
             </Pressable>
 
-            <Button style={{ marginBottom: 15, borderRadius: 20, width: '50%', marginHorizontal: 60, alignItems: 'center', marginTop: 300 ,color:'#F81250'}} title="Logout" color='#F81250' onPress={() => OnLogoutPressed()} />
+            <Button style={{ marginBottom: 15, borderRadius: 20, width: '50%', marginHorizontal: 60, alignItems: 'center', marginTop: 300 ,color:'#F81250'}} title="Logout" color='#F81250' onPress={() => OnLogoutPressed(props.navigation.navigate('Login'))} />
 
 
 

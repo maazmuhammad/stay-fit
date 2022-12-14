@@ -10,8 +10,9 @@ import {
     SET_DISTANCE,
     SET_HEART_POINT,
     SET_ACCESS_TOKEN,
+    LOGIN_TYPE,
 
-    
+
 } from "./UserTypes";
 
 
@@ -22,17 +23,18 @@ const initialState = {
     error: null,
     currentUser: {},
     userFitnessData: {},
-    setSteps:{},
-    setCalories:{},
-    setDistance:{},
-    SetHeartPoint:{},
-    setAccessToken:{},
+    setSteps: {},
+    setCalories: {},
+    setDistance: {},
+    SetHeartPoint: {},
+    setAccessToken: {},
+    loginType: '',
 };
 
 
 const userReducer = (state = initialState, action) => {
-    const { payload, type,steps,calories,distance,heartpoint,accesstoken } = action;
-  //  console.log(action,'actions')
+    const { payload, type, steps, calories, distance, heartpoint, accesstoken, loginType } = action;
+    //  console.log(action,'actions')
     switch (type) {
         case SET_CURRENT_USER:
             return {
@@ -67,24 +69,28 @@ const userReducer = (state = initialState, action) => {
             };
         case SET_STEPS:
             return {
-                ...state,steps
+                ...state, steps
             };
         case SET_CALORIES:
-            return{
-                ...state,calories
-            }    
+            return {
+                ...state, calories
+            }
         case SET_DISTANCE:
-            return{
-                ...state,distance
-            } 
+            return {
+                ...state, distance
+            }
         case SET_HEART_POINT:
-            return{
-                ...state,heartpoint
-            }   
+            return {
+                ...state, heartpoint
+            }
         case SET_ACCESS_TOKEN:
-            return{
-                ...state,accesstoken
-            }         
+            return {
+                ...state, accesstoken
+            }
+        case LOGIN_TYPE:
+            return {
+                ...state, loginType
+            }
         default:
             return state;
     }

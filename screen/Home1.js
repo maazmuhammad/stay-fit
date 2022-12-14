@@ -9,6 +9,8 @@ import {
 import axios from 'axios';
 import { setAccessToken } from '../Redux/User/UserAction';
 import { connect } from 'react-redux';
+import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
 //import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
 
@@ -49,21 +51,28 @@ const Home1 = (props) => {
 
 
 
-    signIn = async () => {
-
-
+    const signIn = async () => {
         try {
             await GoogleSignin.hasPlayServices();
-            //await GoogleSignin.signOut()
-            const userInfo = await GoogleSignin.signIn();
-            
-            const _data = await axios.post(`https://oauth2.googleapis.com/token?client_id=514041579955-gf0mbnocm2u0qdk4mmmef2berpc4ksi1.apps.googleusercontent.com&client_secret=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&code=${userInfo.serverAuthCode}&grant_type=authorization_code`)
-            // console.log(_data,'google')
-            console.log('access token', _data.data.access_token)
-            props.setAccessToken(_data?.data.access_token)
-            navigation.navigate('Home')
+            if (props.loginType === 'GOOGLE') {
+                const userInfo = await GoogleSignin.getTokens();
+                //console.log(userInfo, 'userInfo')
+                props.setAccessToken(userInfo.accessToken)
+                navigation.navigate("Home")
+            }
+            else {
+                const { idToken } = await GoogleSignin.signIn()
+                if (idToken) {
+                    const userInfo = await GoogleSignin.getTokens();
+                 //   console.log(userInfo, 'userInfo')
+                    props.setAccessToken(userInfo.accessToken)
+                    navigation.navigate("Home")
+                }
+            }
 
-            // this.setState({ userInfo });
+
+            //     const _data = await axios.post(`https://oauth2.googleapis.com/token?client_id=514041579955-gf0mbnocm2u0qdk4mmmef2berpc4ksi1.apps.googleusercontent.com&client_secret=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&code=${userInfo.serverAuthCode}&grant_type=authorization_code`)
+            //     console.log(_data?.data.refresh_token)
 
         } catch (error) {
             if (error.code === statusCodes.SIGN_IN_CANCELLED) {
@@ -77,9 +86,18 @@ const Home1 = (props) => {
                 console.log(error, error.code, error.message)
             }
         }
-        // navigation.navigate('Home')
-
+        //  navigation.navigate('Home')
     };
+    const back = () => {
+        GoogleSignin.signOut()
+
+
+
+
+    }
+
+
+
     const navigatetoSmartNutrition = () => {
         navigation.navigate('Smart')
 
@@ -91,34 +109,6 @@ const Home1 = (props) => {
 
 
     }
-    const onDrawer = () => {
-
-
-
-
-    }
-
-    // const setUserData =  () => {
-    //     //console.log("new=============--------------")
-    //      firestore()
-    //     .collection('users')
-    //      .get()
-    //     // .add()
-    //     // .add({
-    //     //     name: 'Ada Lovelace',
-    //     //     age: 30,
-    //     // })
-    //     // .then((r) => {
-    //     //     console.log('User added!');
-    //     // })
-    //     .catch((e)=>{
-    //         console.log(e,'eeeee added!');
-    //     })
-    //     console.log("new 22222222222222222222222=============--------------")
-    // }
-
-
-
     return (
 
 
@@ -165,6 +155,7 @@ const Home1 = (props) => {
                 </TouchableOpacity>
 
             </View>
+            {/* <Button color='#F81250' title="Logout" onPress={() => back()} /> */}
 
 
 
@@ -201,9 +192,11 @@ const styles = StyleSheet.create({
 
 
 })
+// export default Home1;
 
 const mapStateToProps = (store) => (
     {
+        loginType: store.loginType
     }
 );
 

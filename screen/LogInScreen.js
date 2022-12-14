@@ -11,6 +11,8 @@ import { useState } from 'react';
 import { LoginManager, AccessToken } from 'react-native-fbsdk-next';
 import firestore from '@react-native-firebase/firestore';
 import axios from 'axios';
+import { setLoginType } from '../Redux/User/UserAction';
+import { connect } from 'react-redux';
 
 
 
@@ -24,7 +26,7 @@ const Password_REGEX = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/
 
 
 
-const LogInScreen = () => {
+const LogInScreen = (props) => {
     const inputRef = useRef(null)
     const emailinputRef = useRef(null)
     const [Password, setPassword] = React.useState('');
@@ -37,11 +39,11 @@ const LogInScreen = () => {
 
 
     useEffect(() => {
-     //   console.log('login');
-        
+        //   console.log('login');
+
     }, []);
 
-   
+
 
     const navigation = useNavigation();
     // const OnLoginPressed = async (Email, Password) => {
@@ -55,8 +57,8 @@ const LogInScreen = () => {
 
         //     alert("Please enter valid email")
         // }
-        
-         if (Email?.trim().length == 0) {
+
+        if (Email?.trim().length == 0) {
             alert("Please enter email")
         }
         // else if (!Password.match(Password_REGEX)) {
@@ -67,12 +69,12 @@ const LogInScreen = () => {
                 .then(() => {
 
                     console.log("login successful")
-                    // navigation.navigate('Home1');
+                    navigation.navigate('Home1');
                     emailinputRef.current.clear()
                     inputRef.current.clear()
                     setEmail("")
                     setPassword("")
-
+                    props.setLoginType('PASSWORD');
 
 
 
@@ -150,13 +152,14 @@ const LogInScreen = () => {
             await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
             // Get the users ID token
             const { idToken } = await GoogleSignin.signIn();
-           // GoogleSignin.addScopes()
+            // GoogleSignin.addScopes()
 
             // Create a Google credential with the token
             const googleCredential = auth.GoogleAuthProvider.credential(idToken);
 
             // Sign-in the user with the credential
             return auth().signInWithCredential(googleCredential);
+
         }
         catch {
             (e => console.log(e))
@@ -237,7 +240,8 @@ const LogInScreen = () => {
                             .then(res => {
                                 console.log(res.user);
                                 setUserData(res.user);
-                                // navigation.navigate('Home1');
+                                props.setLoginType('GOOGLE');
+                                navigation.navigate('Home1');
                             })
                             .catch(
                                 error => console.error(error))
@@ -248,13 +252,14 @@ const LogInScreen = () => {
                         />
 
                     </Pressable>
- 
+
                     <Pressable
                         onPress={() => onFacebookButtonPress()
                             .then(res => {
-                                //console.log(res.data);
+                                console.log(res.data, "facebook user");
                                 setUseData(res.data);
-                                // navigation.navigate('Home1');
+                                props.setLoginType('FACEBOOK');
+                                navigation.navigate('Home1');
                             })
                             .catch(
                                 error => console.error(error))
@@ -369,4 +374,31 @@ const styles = StyleSheet.create({
 
 
 })
-export default LogInScreen;
+
+const mapStateToProps = (store) => (
+    {}
+);
+
+const mapDispatchToProps = (dispatch) => ({
+    setLoginType: (type) => dispatch(setLoginType(type))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(LogInScreen);
+
+// import React from 'react';
+// import {View, StyleSheet,Text} from 'react-native';
+
+// const LogInScreen = () => {
+//     return (
+//         <View>
+//             <Text>
+//                 maaz
+//             </Text>
+//         </View>
+//     );
+// }
+
+// const styles = StyleSheet.create({})
+
+// export default LogInScreen;
+

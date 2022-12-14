@@ -15,8 +15,9 @@ import StackNavigation from '../navigation/index'
 import HomeNavigation from './HomeStack';
 import ActivitySummaryNav from './ActivitySummaryNav';
 // import ViewMore from '../screen/ViewMore';
-// import InAppGoogleSignin from '../screen/InAppGoogleSignin';
+//import InAppGoogleSignin from '../screen/InAppGoogleSignin';
 import firestore from '@react-native-firebase/firestore';
+//import InAppSignin from '../screen/InAppSignin';
 
 
 
@@ -28,104 +29,71 @@ const Drawer = createDrawerNavigator();
 const AuthStack = createNativeStackNavigator();
 
 
-const DrawerNav = () => {
+const DrawerNav = (props) => {
 
     const [user, setUser] = useState(null)
 
     const setUserData = (currentUser) => {
         try {
-           // console.log("1123123=============--------------")
-           // console.log(currentUser, "check userr")
-            // firestore()
-            //     .collection('Users')
-            //     .doc('uMJJe4hctIBVd4Hje0vO')
-            //     // .set(
-            //     //     {
-            //     //         email: currentUser.email,
-            //     //         uid: currentUser.uid,
-            //     //         name: currentUser.displayName
-            //     //     }
-            //     // )
-            //     .get()
-            //     .then((res) => {
-            //         console.log('User added!', res);
-            //     })
-            //     .catch(err)
-            // {
-            //     console.log(err, "firebase error")
-            // }
+            firestore()
+                .collection('users')
+                .doc(currentUser.uid)
+                .set({
+                    name: currentUser.displayName,
+                    email: currentUser.email,
+                    uid: currentUser.uid,
 
-            //         firestore()
-            //         .collection('Users')
-            //         .get()
-            //         .then(querySnapshot => {
-            //           console.log('Total users: ', querySnapshot.size);
-
-            //           querySnapshot.forEach(documentSnapshot => {
-            //             console.log('User ID: ', documentSnapshot.id, documentSnapshot.data());
-            //           });
-            //         });
-            // //         // firestore()
-            //         //     .collection('checkUsers')
-            //         //     .add({
-            //         //         name: 'Ada Lovelace',
-            //         //         age: 30,
-            //         //     })
-            //         //     .then(() => {
-            //         //         console.log('User added!');
-            //         //     })
-            //         //     .catch(err => console.log(err,"error 62"))
+                })
+                .then(() => {
+                    console.log('User added!');
+                });
 
         } catch (error) {
             console.log(error, 'firebase collection err')
-            
+
         }
     }
 
     useEffect(() => {
         auth().onAuthStateChanged((user) => {
             if (user) {
-                //  console.log(user, "user--------------")
+                console.log(user, "user--------------")
                 setUser(user)
-              //  setUserData(user)
+                setUserData(user)
             }
         })
     }, []);
+    console.log(user, 'userr----')
 
 
+    const renderDrawer = () => {
+        return (
+            <NavigationContainer>
+                <Drawer.Navigator screenOptions={{ headerShown: false }} drawerContent={props => <DrawerCon {...props} />}>
+                    <Drawer.Screen name="Home1" component={HomeNavigation} />
+                    <Drawer.Screen name="Login" component={LogInScreen} />
+                    <Drawer.Screen name="Smart" component={ActivitySummaryNav} />
+                    {/* <Drawer.Screen name="GoogleSignin" component={InAppSignin} /> */}
+                    <Drawer.Screen name="SetGoal" component={SetGoal} />
+                    <Drawer.Screen name="DailyTask" component={AddDailyTask} />
+                    <Drawer.Screen name="WorkoutTask" component={AddWorkOutTask} />
+                </Drawer.Navigator>
+            </NavigationContainer>
+        )
+    }
     return (
-        <NavigationContainer>
-            {
-                user ?
-                    <Drawer.Navigator screenOptions={{ headerShown: false }} drawerContent={props => <DrawerCon {...props} />}>
-                        <Drawer.Screen name="Home1" component={HomeNavigation} />
-                        
 
-
-                        <Drawer.Screen name="Smart" component={ActivitySummaryNav} />
-                        {/* <Drawer.Screen name="More" component={ViewMore} /> */}
-
-
-
-                        <Drawer.Screen name="SetGoal" component={SetGoal} />
-                        <Drawer.Screen name="DailyTask" component={AddDailyTask} />
-                        <Drawer.Screen name="WorkoutTask" component={AddWorkOutTask} />
-
-
-
-
-                    </Drawer.Navigator>
-
-                    :
-                    <AuthStack.Navigator screenOptions={{ headerShown: false }}>
-                        <AuthStack.Screen name='Login' component={LogInScreen} />
-                        <AuthStack.Screen name='Register' component={RegisterSrcee} />
-
-                    </AuthStack.Navigator>
-
-            }
-
-        </NavigationContainer>
+        !!user
+            ?
+            renderDrawer()
+            :
+            <NavigationContainer>
+                <AuthStack.Navigator screenOptions={{ headerShown: false }}>
+                    <AuthStack.Screen name='Login' component={LogInScreen} />
+                    <AuthStack.Screen name='Register' component={RegisterSrcee} />
+                    <AuthStack.Screen name='Home1' component={Home1} />
+                </AuthStack.Navigator>
+            </NavigationContainer>
     );
 }
 

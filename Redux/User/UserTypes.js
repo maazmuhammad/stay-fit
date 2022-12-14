@@ -8,4 +8,4 @@ export const SET_CALORIES='SET_CALORIES';
 export const SET_DISTANCE= 'SET_DISTANCE';
 export const SET_HEART_POINT='SET_HEART_POINT';
 export const SET_ACCESS_TOKEN='SET_ACCESS_TOKEN';
-
+export const LOGIN_TYPE='LOGIN_TYPE'

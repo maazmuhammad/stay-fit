@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, } from 'react';
-import { View, StyleSheet, Image, Text, Pressable,Button } from 'react-native';
+import { View, StyleSheet, Image, Text, Pressable, Button } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
 import {
@@ -12,6 +12,9 @@ import 'react-native-gesture-handler';
 import { connect } from "react-redux";
 import { GetUserFitnessData } from "../Redux/User/UserAction"
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
+
 
 
 
@@ -57,17 +60,28 @@ const Home = (props) => {
     };
 
     const back = () => {
-        GoogleSignin.signOut()
+        // GoogleSignin.signOut()
         navigation.navigate('Home1')
 
-        
+
+
+
 
     }
 
 
+    
+
+
+
+
+
     useEffect(() => {
+
         props.GetFitnessData(props.accesstoken)
-        
+        // RefreshTokentoAcessToken()
+
+
         // console.log(props.calories, 'calories')
     }, []);
 
@@ -156,8 +170,8 @@ const Home = (props) => {
                         source={require('../assests/image/heart.png')}
                     />
                     {
-                         props?.heartpoint
-                         &&
+                        props?.heartpoint
+                        &&
 
                         <Text style={{ fontSize: 26, fontWeight: 'bold', color: 'white', }}>
                             {props.heartpoint}
@@ -208,7 +222,7 @@ const Home = (props) => {
             </View>
 
 
-            <Button color='#F81250' title="BACK" onPress={() => back()}  />
+            <Button color='#F81250' title="BACK" onPress={() => back()} />
         </View>
 
 
@@ -254,7 +268,7 @@ const mapStateToProps = (store) => (
         calories: store.user.calories,
         distance: store.user.distance,
         heartpoint: store.user.heartpoint,
-        accesstoken:store.user.accesstoken,
+        accesstoken: store.user.accesstoken,
 
 
 
@@ -267,6 +281,7 @@ const mapStateToProps = (store) => (
 
 const mapDispatchToProps = (dispatch) => ({
     GetFitnessData: (token) => dispatch(GetUserFitnessData(token))
+    
 
 
 });
