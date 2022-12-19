@@ -27,13 +27,13 @@ const Home = (props) => {
 
     const data = {
         labels: ["Run"], // optional
-        data: [0.4]
+        data: [(props?.steps||0)/10000]
     };
     const data1 = {
         labels: ["12:00 am", "6:00 am", "12:00 pm", "6:00 pm"],
         datasets: [
             {
-                data: [0.7, 0.1, 0.9, 0.3, 0.5]
+                data: [(props?.steps||0)/10000]
             }
         ]
     };

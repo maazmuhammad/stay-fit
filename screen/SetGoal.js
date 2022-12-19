@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Text, TouchableOpacity, TextInput, Pressable, Image, Button } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity, TextInput, Pressable, Image, Button,Alert } from 'react-native';
 import {
     ProgressChart,
 
@@ -18,36 +18,59 @@ const SetGoal = () => {
     const [Goal, SetGoal] = React.useState('');
     const screenWidth = Dimensions.get("window").width
     const [user, setUser] = useState(null)
+    const [goalstep, setgoalstep]=useState();
+
+    firestore()
+    .collection('Setgoal')
+    .doc(auth().currentUser.uid)
+    .get()
+    .then(querySnapshot => {
+      //console.log(querySnapshot)
+      //console.log(querySnapshot._data.StepGoal)
+      setgoalstep(querySnapshot._data.StepGoal)
+      console.log(goalstep,"ahhahahah")
+      //console.log(showdata)
+     
+
+    });
    
     const data = {
         // labels: ["Run"], // optional
-        data: [0.7]
+        
+        data: [(goalstep||0)/10000]
     };
     // const SaveGoal = () => {
 
     // }
    // SaveGoal(user)
+
+
    
 
 
     const SaveGoal = () => {
-        try {
-            firestore()
-                .collection('Setgoal')
-                .doc(auth().currentUser.uid)
-                .set({
+        if(Goal>=5000){
 
-                    StepGoal: Goal,
-
-                })
-                .then(() => {
-                    console.log('Goal added!');
-                });
-
-        } catch (error) {
-            console.log(error, 'firebase collection err')
-
-        }
+            try {
+                firestore()
+                    .collection('Setgoal')
+                    .doc(auth().currentUser.uid)
+                    .set({
+    
+                        StepGoal: Goal,
+    
+                    })
+                    .then(() => {
+                        console.log('Goal added!');
+                    });
+    
+            } catch (error) {
+                console.log(error, 'firebase collection err')
+    
+            }
+        }else(
+            Alert.alert("Goal Steps should be greater then 5000 ")
+        )
         
     }
 
@@ -127,7 +150,7 @@ const SetGoal = () => {
                     <TextInput
                         onChangeText={(Goal) => SetGoal(Goal)}
                         keyboardType='numeric'
-                        maxLength={4}
+                        maxLength={5}
                         placeholder="min steps 5K"
 
                         style={{

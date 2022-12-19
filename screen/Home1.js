@@ -56,7 +56,7 @@ const Home1 = (props) => {
             await GoogleSignin.hasPlayServices();
             if (props.loginType === 'GOOGLE') {
                 const userInfo = await GoogleSignin.getTokens();
-                //console.log(userInfo, 'userInfo')
+               // console.log(userInfo.accessToken, 'userInfo')
                 props.setAccessToken(userInfo.accessToken)
                 navigation.navigate("Home")
             }
@@ -64,7 +64,7 @@ const Home1 = (props) => {
                 const { idToken } = await GoogleSignin.signIn()
                 if (idToken) {
                     const userInfo = await GoogleSignin.getTokens();
-                 //   console.log(userInfo, 'userInfo')
+                  // console.log(userInfo.accessTokens, 'userInfo')
                     props.setAccessToken(userInfo.accessToken)
                     navigation.navigate("Home")
                 }

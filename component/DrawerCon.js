@@ -1,10 +1,14 @@
-import React from 'react';
+//import React from 'react';
+import React, { useState, useEffect, } from 'react';
 import { View, Text, StyleSheet, Pressable, Image } from 'react-native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { TextInput, Button } from "@react-native-material/core";
 import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
 import auth from '@react-native-firebase/auth';
 import { useNavigation } from '@react-navigation/native';
+import firestore from '@react-native-firebase/firestore';
+import { connect } from "react-redux";
+//import auth from '@react-native-firebase/auth';
 
 
 
@@ -22,6 +26,9 @@ const styles = StyleSheet.create({
 
 
 
+
+
+
 const OnLogoutPressed = async (props) => {
     // const navigation = useNavigation();
 
@@ -33,7 +40,7 @@ const OnLogoutPressed = async (props) => {
         GoogleSignin.signOut();
         auth().signOut();
         console.log("Sign out successfull")
-       props.navigation.navigate('Login')
+        props.navigation.navigate('Login')
 
         // this.setState({ user: null }); // Remember to remove the user from your app's state as well
     } catch (error) {
@@ -54,13 +61,51 @@ const ConnectWallet = () => { }
 
 
 
-export default function DrawerCon(props) {
-    
+const DrawerCon = (props) => {
+    const [goalstep, setgoalstep] = useState();
+    const [coin, setcoin] = useState();
+
+    useEffect(() => {
+        console.log(auth().currentUser, 'usermaaz')
+        console.log(props.steps, "steps")
+        firestore()
+            .collection('Setgoal')
+            .doc(auth().currentUser.uid)
+            .get()
+            .then(querySnapshot => {
+                setgoalstep(querySnapshot._data.StepGoal)
+                console.log(goalstep, "steps drawer")
+            });
+        if (!!props.steps && !!goalstep && (props.steps == goalstep)) {
+            firestore()
+                .collection('Coin')
+                .doc(auth().currentUser.uid)
+                .update({
+
+                    Coin: coin + 500,
+
+                })
+                .then(() => {
+                    console.log('coin added!');
+                });
+        }
+
+        firestore()
+            .collection('Coin')
+            .doc(auth().currentUser.uid)
+            .get()
+            .then(querySnapshot => {
+                // console.log(querySnapshot._data.Coin)
+                setcoin(querySnapshot._data.Coin)
+                console.log(coin, "coin")
+            });
+    }, [props.steps]);
+
     return (
         <View >
             <View style={{ flexDirection: 'row' }} >
-               
-                <View style={{ backgroundColor: '#F81250', height: 40, width: 150, marginTop: 20, borderRadius: 10, left: 110 }}>
+
+                <View style={{ backgroundColor: '#F81250', height: 40, width: 150, marginTop: 20, borderRadius: 10, left: 110, flexDirection: 'row', alignItems: 'center' }}>
 
                     <Image
                         style={{
@@ -72,9 +117,15 @@ export default function DrawerCon(props) {
                         }}
                         source={require('../assests/image/donate.png')}
                     />
+
+                    <Text style={{ fontSize: 25, fontWeight: 'bold', color: 'black', paddingLeft: 10, marginBottom: 0, }}>
+                        {coin}
+                    </Text>
+
+
                 </View>
             </View>
-            <Text style={{ fontSize: 30, fontWeight: 'bold', marginTop: 20, marginBottom: 20,padding:10,color:'red'}}>
+            <Text style={{ fontSize: 30, fontWeight: 'bold', marginTop: 20, marginBottom: 20, padding: 10, color: 'red' }}>
                 Hey! {auth().currentUser.displayName}
             </Text>
 
@@ -118,7 +169,7 @@ export default function DrawerCon(props) {
                 </Text>
             </Pressable>
 
-            <Button style={{ marginBottom: 15, borderRadius: 20, width: '50%', marginHorizontal: 60, alignItems: 'center', marginTop: 300 ,color:'#F81250'}} title="Logout" color='#F81250' onPress={() => OnLogoutPressed(props.navigation.navigate('Login'))} />
+            <Button style={{ marginBottom: 15, borderRadius: 20, width: '50%', marginHorizontal: 60, alignItems: 'center', marginTop: 300, color: '#F81250' }} title="Logout" color='#F81250' onPress={() => OnLogoutPressed(props.navigation.navigate('Login'))} />
 
 
 
@@ -129,3 +180,12 @@ export default function DrawerCon(props) {
 
     );
 }
+const mapStateToProps = (store) => (
+    {
+        steps: store.user.steps,
+    }
+);
+
+const mapDispatchToProps = (dispatch) => ({
+});
+export default connect(mapStateToProps, mapDispatchToProps)(DrawerCon);
