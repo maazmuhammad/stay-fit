@@ -1,76 +1,23 @@
-import { useState ,useEffect } from 'react';
+import { useState } from 'react';
 import { StyleSheet, Text, View, Button, TextInput, ScrollView, FlatList, Pressable, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import firestore from '@react-native-firebase/firestore';
-import auth from '@react-native-firebase/auth';
-
 
 
 export default function AddDailyTask() {
   const [enteredGoalText, setenteredGoalText] = useState('');
   const [goal, setgoal] = useState([]);
-  const[showdata, setshowdata]=useState([]);
-
-  const DailyTask = () => {
-    console.log(showdata,"showdata")
-    try {
-      firestore()
-        .collection('Setgoal')
-        .doc(auth().currentUser.uid)
-        .set({
-
-          DailyTask: showdata,
-
-        })
-        .then(() => {
-          console.log('todo task added!');
-        });
-
-    } catch (error) {
-      console.log(error, 'firebase collection err')
-
-    }
-
-  }
-
-  const Getdata=()=>{
-    try{
-      firestore()
-        .collection('Daily')
-        .doc(auth().currentUser.uid)
-        .get()
-        .then(querySnapshot => {
-          //console.log(querySnapshot)
-        // console.log(querySnapshot._data.DailyTask)
-          setshowdata(querySnapshot._data.DailyTask)
-          console.log(showdata)
-         
-
-        });
-
-    }catch(error){
-      console.log(error, ' get')
-
-    }
-  }
-  useEffect(() => {
-    Getdata()
-    
-}, []);
-
-
 
   function goalInputHandler(enteredText) {
     setenteredGoalText(enteredText);
 
   };
   function addGoalHandler() {
-    console.log(showdata,'dat1')
-    setshowdata([
-      ...showdata,
+    setgoal((newgoal) => [
+      ...newgoal,
       { text: enteredGoalText, id: Math.random().toString() },
+
     ]);
-    DailyTask()
+
   };
   const navigation = useNavigation();
 
@@ -89,31 +36,29 @@ export default function AddDailyTask() {
               />
 
             </Pressable>
-            <Text style={{ fontSize: 28, fontWeight: 'bold', paddingLeft: 10, color: 'white' }}>Daily Task</Text>
+            <Text style={{ fontSize: 28, fontWeight: 'bold', paddingLeft: 10, color: 'white' }}>Workout Task</Text>
           </View>
         </View>
       </View>
 
       <View style={styles.inputContainer}>
-        <TextInput style={styles.TextInput} placeholder='Daily Task!' onChangeText={goalInputHandler} />
+        <TextInput style={styles.TextInput} placeholder='Add Workout Task!' onChangeText={goalInputHandler} />
 
         <Button color='#F81250' title='   Add   ' onPress={addGoalHandler} />
 
       </View>
       <View style={styles.list}>
-        <Text style={{ color: 'black', fontSize: 20, fontWeight: 'bold', paddingHorizontal: 16, }}>Your Daily Task List </Text>
+        <Text style={{ color: 'black', fontSize: 20, fontWeight: 'bold',paddingHorizontal: 16, }}>Your Workout Task List </Text>
         <FlatList
-          data={showdata}
+          data={goal}
           renderItem={(itemd) => {
-            console.log(itemd,"itemd")
+
             return (
+
               <View style={styles.item}>
                 <Text style={styles.text}>{itemd.item.text}</Text>
               </View>
             );
-
-
-
           }}
           keyExtractor={(item, index) => {
             return item.id;
@@ -130,7 +75,7 @@ export default function AddDailyTask() {
 const styles = StyleSheet.create({
   appContainer: {
     flex: 1,
-    backgroundColor: 'black'
+    backgroundColor:'black'
     // paddingTop: 50,
     //paddingHorizontal: 16,
 
@@ -156,9 +101,9 @@ const styles = StyleSheet.create({
     width: '70%',
     marginRight: 8,
     padding: 8,
-    color: 'white'
-
-
+    color:'white'
+    
+    
 
 
   },
@@ -167,7 +112,7 @@ const styles = StyleSheet.create({
 
   },
   item: {
-
+   
 
     margin: 8,
     padding: 8,

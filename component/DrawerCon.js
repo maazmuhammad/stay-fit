@@ -1,6 +1,6 @@
 //import React from 'react';
 import React, { useState, useEffect, } from 'react';
-import { View, Text, StyleSheet, Pressable, Image } from 'react-native';
+import { View, Text, StyleSheet, Pressable, Image, Alert } from 'react-native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { TextInput, Button } from "@react-native-material/core";
 import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
@@ -74,9 +74,10 @@ const DrawerCon = (props) => {
             .get()
             .then(querySnapshot => {
                 setgoalstep(querySnapshot._data.StepGoal)
-                console.log(goalstep, "steps drawer")
+                // console.log(goalstep, "steps drawer")
             });
-        if (!!props.steps && !!goalstep && (props.steps == goalstep)) {
+
+        if (!!props.steps && !!goalstep && (props.steps >= goalstep)) {
             firestore()
                 .collection('Coin')
                 .doc(auth().currentUser.uid)
@@ -84,9 +85,23 @@ const DrawerCon = (props) => {
 
                     Coin: coin + 500,
 
+
                 })
                 .then(() => {
-                    console.log('coin added!');
+                    firestore()
+                        .collection('Setgoal')
+                        .doc(auth().currentUser.uid)
+                        .update({
+
+                            StepGoal: 0,
+
+
+                        })
+                        .then(()=>{
+                                Alert.alert("Congratulations!! You achieve your Goals")                             
+                        });
+
+
                 });
         }
 
@@ -103,6 +118,8 @@ const DrawerCon = (props) => {
 
     return (
         <View >
+
+
             <View style={{ flexDirection: 'row' }} >
 
                 <View style={{ backgroundColor: '#F81250', height: 40, width: 150, marginTop: 20, borderRadius: 10, left: 110, flexDirection: 'row', alignItems: 'center' }}>
@@ -156,7 +173,7 @@ const DrawerCon = (props) => {
                 />
 
                 <Text style={{ fontSize: 17, color: '#F81250', fontWeight: 'bold', marginHorizontal: 30 }}>
-                    Add Daily TasK
+                    Add Daily Task
                 </Text>
             </Pressable><Pressable onPress={() => props.navigation.navigate('WorkoutTask')} style={{ marginHorizontal: 20, flexDirection: 'row', marginTop: 10, }}>
                 <Image

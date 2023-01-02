@@ -49,7 +49,9 @@ const SetGoal = () => {
 
 
     const SaveGoal = () => {
+
         if(Goal>=5000){
+            Alert.alert("Goal Set")
 
             try {
                 firestore()
@@ -69,7 +71,7 @@ const SetGoal = () => {
     
             }
         }else(
-            Alert.alert("Goal Steps should be greater then 5000 ")
+            Alert.alert("Goal Steps should be greater then 5000")
         )
         
     }
