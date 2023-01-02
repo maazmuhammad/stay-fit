@@ -56,7 +56,7 @@ const SetGoal = () => {
                     .collection('Setgoal')
                     .doc(auth().currentUser.uid)
                     .set({
-    
+
                         StepGoal: Goal,
     
                     })

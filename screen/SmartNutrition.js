@@ -1,14 +1,18 @@
 import React, { useRef, useEffect, } from 'react';
-import { View, StyleSheet, Text, Pressable, Image, ToastAndroid, TouchableHighlight, Alert } from 'react-native';
+import { View, StyleSheet, Text, Pressable, Image, ToastAndroid, TouchableHighlight, Alert, FlatList, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Avatar, Button } from 'react-native-paper';
 import { launchImageLibrary } from 'react-native-image-picker';
 // import { utils } from '@react-native-firebase/app';
 import storage from '@react-native-firebase/storage';
+import axios from "axios";
+import * as Progress from 'react-native-progress';
 import { black } from 'react-native-paper/lib/typescript/styles/themes/v2/colors';
 const SmartNutrition = () => {
     const [Pic, SetPic] = React.useState('');
     const navigation = useNavigation();
+    const [data, setdata] = React.useState([]);
+    const [isloading, setisloading] = React.useState(false);
 
     const setToastMsg = msg => {
         ToastAndroid.showWithGravity(
@@ -51,44 +55,65 @@ const SmartNutrition = () => {
         SetPic('')
         setToastMsg('Image removed')
     }
+    useEffect(() => {
+
+    }, [])
+
 
     const UploadtoStorage = async () => {
         // console.log(Pic,"pic url")
+        setisloading(true);
 
-        const reference = await storage().ref('uploadImage' + new Date().getTime());
-        await reference.putString('data:image/png;base64,' + Pic, 'data_url');
-        const Url = await reference.getDownloadURL();
 
-        console.log(Url)
-        try{
 
-            const { data } = await axios.post('https://vision.googleapis.com/v1/images:annotate?key=AIzaSyAAtLItq7Yx76RbBgpzalzv95Z3dCb82wU',
-                {
-                    "requests": [
-                        {
-                            "image": {
-                                "source": {
-                                    "imageUri": Url
-                                }
-                            },
-                            "features": [
-                                {
-                                    "type": "LABEL_DETECTION"
-                                }
-                            ]
-                        }
-                    ]
-    
-                }
-    
-    
-    
-    
-            )
-        }catch(error){
+        try {
+            const reference = await storage().ref('uploadImage' + new Date().getTime());
+            await reference.putString('data:image/png;base64,' + Pic, 'data_url');
+            const Url = await reference.getDownloadURL();
+
+            console.log(Url)
+            if (Url) {
+
+
+                const { data } = await axios.post('https://vision.googleapis.com/v1/images:annotate?key=AIzaSyCBtcqBTKDPmgbcgg8oGn2XmHF8srnoBS8',
+                    {
+                        "requests": [
+                            {
+                                "image": {
+                                    "source": {
+                                        "imageUri": Url
+                                    }
+                                },
+                                "features": [
+                                    {
+                                        "type": "LABEL_DETECTION"
+                                    }
+                                ]
+                            }
+                        ]
+
+                    }
+
+
+
+
+
+                )
+                console.log(data, 'api response')
+                console.log(data.responses[0].labelAnnotations)
+
+
+                setdata(data.responses[0].labelAnnotations)
+
+
+            }
+
+        } catch (error) {
             console.log(error)
         }
-        
+        finally { setisloading(false) }
+
+
 
 
 
@@ -167,10 +192,46 @@ const SmartNutrition = () => {
                 <Button mode='contained' onPress={() => removeImage()} style={{backgroundColor:'#F81250' }}>
                     Remove Image
                 </Button> */}
-                <Button mode='contained' onPress={() => UploadtoStorage()} style={{ backgroundColor: '#F81250' }}>
-                    Analyze
-                </Button>
+                {
+                    isloading
+                        ?
+                        <ActivityIndicator size={'large'} color='white' />
+                        :
+                        <Button mode='contained' onPress={() => UploadtoStorage()} style={{ backgroundColor: '#F81250' }}>
+                            Analyze
+                        </Button>
+                }
             </View>
+            <FlatList
+                data={data}
+
+                renderItem={(itemd) => {
+                    console.log(itemd, "itemd")
+                    return (
+                        <View style={styles.item}>
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10 }}>
+
+                                <Text style={styles.text}>{itemd.item.description}</Text>
+                                {/* itemd?item.score
+                            && */}
+                                <Text style={styles.text}>{Number(itemd.item.score * 100).toFixed()}%</Text>
+
+                            </View>
+
+                            <Progress.Bar color='white' progress={itemd.item.score} width={325} />
+                        </View>
+                    );
+
+
+
+                }}
+                // keyExtractor={(item) => {
+                //     return item.id;
+                // }}
+                alwaysBounceVertical={false}
+
+            />
+
 
 
 
@@ -200,7 +261,19 @@ const styles = StyleSheet.create({
         height: 300,
         width: 300,
         borderRadius: 300,
-    }
+    },
+    text: {
+        color: 'white',
+        fontWeight: 'bold',
+        fontSize: 16
+    },
+    item: {
+        margin: 8,
+        padding: 8,
+        borderRadius: 6,
+        backgroundColor: '#F81250',
+
+    },
 
 })
 
