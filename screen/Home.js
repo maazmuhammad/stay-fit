@@ -222,7 +222,7 @@ const Home = (props) => {
             </View>
 
 
-            <Button color='#F81250' title="BACK" onPress={() => back()} />
+            {/* <Button color='#F81250' title="BACK" onPress={() => back()} /> */}
         </View>
 
 

@@ -99,11 +99,23 @@ const SmartNutrition = () => {
 
 
                 )
-                console.log(data, 'api response')
+                // console.log(data, 'api response')
                 console.log(data.responses[0].labelAnnotations)
 
+                console.log(data.responses[0].labelAnnotations[0])
 
-                setdata(data.responses[0].labelAnnotations)
+                
+                
+                const ages =(data.responses[0].labelAnnotations[0])
+                
+                if(ages.description === 'Food'){
+                    
+                    setdata(data.responses[0].labelAnnotations)
+
+                }else{
+                    Alert.alert('upload picture is unrelated')
+                }
+
 
 
             }
@@ -206,7 +218,7 @@ const SmartNutrition = () => {
                 data={data}
 
                 renderItem={(itemd) => {
-                    console.log(itemd, "itemd")
+                    // console.log(itemd, "itemd")
                     return (
                         <View style={styles.item}>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10 }}>
