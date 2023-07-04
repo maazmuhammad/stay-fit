@@ -97,7 +97,7 @@ export const setLoginType = (loginType) => {
 
 export const GetUserFitnessData = (token) => {
     return async dispatch => {
-        //console.log(token, "token")
+        console.log(token, "access token")
        // console.log(moment().startOf('day').format('x'), 'start date');
        // console.log(moment().endOf('day').format('x'), 'end date');
 

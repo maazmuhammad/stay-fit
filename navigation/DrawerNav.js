@@ -14,6 +14,9 @@ import RegisterSrcee from '../screen/RegisterScree';
 import StackNavigation from '../navigation/index'
 import HomeNavigation from './HomeStack';
 import ActivitySummaryNav from './ActivitySummaryNav';
+import Adv from '../screen/Adv';
+import Metamask from '../screen/metamask';
+import Wallet from '../screen/wallet';
 // import ViewMore from '../screen/ViewMore';
 //import InAppGoogleSignin from '../screen/InAppGoogleSignin';
 import firestore from '@react-native-firebase/firestore';
@@ -71,12 +74,17 @@ const DrawerNav = (props) => {
             <NavigationContainer>
                 <Drawer.Navigator screenOptions={{ headerShown: false }} drawerContent={props => <DrawerCon {...props} />}>
                     <Drawer.Screen name="Home1" component={HomeNavigation} />
+                    
                     <Drawer.Screen name="Login" component={LogInScreen} />
                     <Drawer.Screen name="Smart" component={ActivitySummaryNav} />
-                    {/* <Drawer.Screen name="GoogleSignin" component={InAppSignin} /> */}
+                
                     <Drawer.Screen name="SetGoal" component={SetGoal} />
                     <Drawer.Screen name="DailyTask" component={AddDailyTask} />
                     <Drawer.Screen name="WorkoutTask" component={AddWorkOutTask} />
+                    <Drawer.Screen name="Adds" component={Adv} />
+                    <Drawer.Screen name="Meta" component={Metamask} />
+                    <Drawer.Screen name="Wallet" component={Wallet} />
+
                 </Drawer.Navigator>
             </NavigationContainer>
         )

@@ -1,4 +1,7 @@
 {
   "name": "fypfit",
-  "displayName": "fypfit"
+  "displayName": "fypfit",
+  "react-native-google-mobile-ads": {
+    "android_app_id": "ca-app-pub-6930363208197035~4403562057"
+  }
 }

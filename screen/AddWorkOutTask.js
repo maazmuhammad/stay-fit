@@ -1,82 +1,253 @@
-import { useState } from 'react';
-import { StyleSheet, Text, View, Button, TextInput, ScrollView, FlatList, Pressable, Image } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { ListItem } from '@react-native-material/core';
+import React from 'react';
 import { useNavigation } from '@react-navigation/native';
+import { View, StyleSheet, Pressable, Image, Text, TouchableOpacity, TextInput, FlatList, Alert } from 'react-native';
+
+import Icon from 'react-native-vector-icons/MaterialIcons';
+
+const COLOR = { primary: "#004aad", white: '#fff' }
 
 
-export default function AddWorkOutTask() {
-  const [enteredGoalText, setenteredGoalText] = useState('');
-  const [goal, setgoal] = useState([]);
-
-  function goalInputHandler(enteredText) {
-    setenteredGoalText(enteredText);
-
-  };
-  function addGoalHandler() {
-    setgoal((newgoal) => [
-      ...newgoal,
-      { text: enteredGoalText, id: Math.random().toString() },
-
-    ]);
-
-  };
+const AddWorkOutTask = () => {
   const navigation = useNavigation();
+  const [textInput, setTextInput] = React.useState('');
+  const [todos, setTodos] = React.useState([]);
+  React.useEffect(() => {
+    savetodo(todos);
+  }, [todos])
+  React.useEffect(() => {
+    gettodo()
 
+  }, [])
+  const ListItem = ({ todo }) => {
+    return <View style={styles.ListItem}>
+      <View style={{ flex: 1 }}>
+        <Text style={{ fontWeight: "bold", fontSize: 20, color: COLOR.white, textDecorationLine: todo?.commplete ? "line-through" : "none" }}>{todo?.task}</Text>
+      </View>
+      {
+        !todo?.commplete && (
+          <TouchableOpacity style={[styles.actionIcon]} onPress={() => markTodoComplete(todo?.id)}>
+            <Image style={{ width: 30, height: 30 }} source={require('../assests/image/tick.png')}
+
+            />
+            {/* <Icon name='done' size={20} color={COLOR.white} /> */}
+          </TouchableOpacity>
+        )
+      }
+
+      <TouchableOpacity style={styles.actionIcon} onPress={() => deleteTodo(todo?.id)} >
+        <Image style={{ width: 30, height: 30, }} source={require('../assests/image/del.png')}
+
+        />
+
+        {/* <Icon name='delete' size={20} color={COLOR.white} /> */}
+
+      </TouchableOpacity>
+    </View>
+  }
+  const savetodo = async todos => {
+    try {
+      const stringifyTodos = JSON.stringify(todos);
+      await AsyncStorage.setItem('todos', stringifyTodos);
+
+    } catch (e) {
+      console.log(e)
+
+    }
+
+
+
+  }
+  const gettodo = async () => {
+    try {
+      const todos = await AsyncStorage.getItem('todos');
+      if (todos != null) {
+        setTodos(JSON.parse(todos))
+
+      }
+    }
+    catch (error) {
+      console.log(error)
+
+    }
+  }
+  const addTodo = () => {
+
+    // console.log(textInput)
+    if (textInput == '') {
+      Alert.alert("Error", "Enter  task")
+
+    } else {
+
+      const newTodo = {
+        id: Math.random(),
+        task: textInput,
+        commplete: false,
+      }
+      setTodos([...todos, newTodo])
+      setTextInput('')
+    }
+
+
+  }
+  const markTodoComplete = todoId => {
+    console.log(todoId)
+    const newTodos = todos.map((item) => {
+      if (item.id == todoId) {
+        return { ...item, commplete: true }
+
+      }
+      return item;
+
+    })
+    setTodos(newTodos);
+
+  }
+  const deleteTodo = (todoId) => {
+    const newTodos = todos.filter(item => item.id != todoId)
+    setTodos(newTodos)
+  }
+  const clearTodo = () => {
+    Alert.alert("Confirm", "clear todo?", [{
+      text: 'Yes',
+      onPress: () => setTodos([]),
+    },
+    { text: ' No' }
+    ])
+
+  }
   return (
+
     <View style={styles.appContainer}>
       <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
-        <View style={{ backgroundColor: '#F81250', height: 50, width: '90%', marginTop: 10, borderRadius: 10, marginHorizontal: 20, }}>
+        <View style={{ backgroundColor: '#004aad', height: 50, width: '90%', marginTop: 10, borderRadius: 10, marginHorizontal: 20, }}>
           <View style={{ flexDirection: 'row' }}>
 
             <Pressable style={{ right: 20 }}
               onPress={() => navigation.openDrawer()}
             >
               <Image
-                style={styles.button1}
+                style={[styles.button1, { marginTop: 10 }]}
                 source={require('../assests/image/menu.png')}
               />
 
             </Pressable>
-            <Text style={{ fontSize: 28, fontWeight: 'bold', paddingLeft: 10, color: 'white' }}>Workout Task</Text>
+            <Text style={{ fontSize: 24, fontWeight: 'bold', paddingLeft: 10, color: 'white' , marginTop:10, justifyContent:'center', right:20}}>Add WorkOut Task</Text>
           </View>
         </View>
       </View>
+      <View style={styles.header}>
+        <Text style={{ fontWeight: 'bold', fontSize: 20, color: COLOR.primary }}>Add WorkOut Task</Text>
 
-      <View style={styles.inputContainer}>
-        <TextInput style={styles.TextInput} placeholder='Add Workout Task!' onChangeText={goalInputHandler} />
+        <Pressable style={{ left: 20 }}
+          onPress={clearTodo}
+        >
+          <Image
+            style={styles.button1}
+            source={require('../assests/image/del.png')}
+          />
 
-        <Button color='#F81250' title='   Add   ' onPress={addGoalHandler} />
+        </Pressable>
+
 
       </View>
-      <View style={styles.list}>
-        <Text style={{ color: 'black', fontSize: 20, fontWeight: 'bold',paddingHorizontal: 16, }}>Your Workout Task List </Text>
-        <FlatList
-          data={goal}
-          renderItem={(itemd) => {
+      <FlatList
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ padding: 20, paddingBottom: 100 }}
+        data={todos} renderItem={({ item }) => <ListItem todo={item} />} />
+      <View style={styles.footer}>
+        <View style={styles.input}>
+          <TextInput placeholder='Add WorkOut Task'
+            value={textInput}
+            onChangeText={text => setTextInput(text)}
+            placeholderTextColor={"white"}
+            style={{ fontWeight: "bold", fontSize: 20, color: COLOR.white, }} />
 
-            return (
+        </View>
 
-              <View style={styles.item}>
-                <Text style={styles.text}>{itemd.item.text}</Text>
-              </View>
-            );
-          }}
-          keyExtractor={(item, index) => {
-            return item.id;
-          }}
-          alwaysBounceVertical={false}
-        />
+        <TouchableOpacity onPress={addTodo}>
+          <View style={styles.IconContainer}>
+            <Image
+              style={styles.button1}
+              source={require('../assests/image/add.png')}
+            />
+          </View>
+
+        </TouchableOpacity>
       </View>
+
+
+
+
     </View>
+
 
 
   );
 }
 
 const styles = StyleSheet.create({
+  header: {
+    padding: 20,
+    flexDirection: 'row',
+    alignItems: "center",
+    justifyContent: "space-between"
+  },
+  actionIcon: {
+    height: 25,
+    width: 25,
+    //  backgroundColor: 'green',
+    justifyContent: "center",
+    alignItems: "center",
+    marginLeft: 5,
+    borderRadius: 3,
+
+  },
+  ListItem: {
+    padding: 20,
+    backgroundColor: COLOR.primary,
+    flexDirection: "row",
+    elevation: 12,
+    borderRadius: 7,
+    marginVertical: 10,
+  },
+  footer: {
+    position: 'absolute',
+    bottom: 0,
+    color: COLOR.primary,
+    width: '100%',
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 20,
+
+  },
+  input: {
+    backgroundColor: COLOR.primary,
+    elevation: 40,
+    flex: 1,
+    height: 50,
+    marginVertical: 20,
+    marginRight: 20,
+    borderRadius: 30,
+    paddingHorizontal: 20,
+
+  },
+  IconContainer: {
+    height: 50,
+    width: 50,
+    backgroundColor: COLOR.primary,
+    borderRadius: 25,
+    elevation: 40,
+    justifyContent: "center",
+    alignItems: "center"
+
+
+  },
   appContainer: {
     flex: 1,
-    backgroundColor:'black'
-    // paddingTop: 50,
+    backgroundColor: '#AAEAFF',
+    //paddingTop: 10,
     //paddingHorizontal: 16,
 
 
@@ -91,19 +262,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 24,
     borderBottomWidth: 6,
-    borderBottomColor: '#F81250'
+    borderBottomColor: '#004aad'
 
 
   },
   TextInput: {
     borderWidth: 1,
-    borderColor: '#F81250',
+    borderColor: '#004aad',
     width: '70%',
     marginRight: 8,
     padding: 8,
-    color:'white'
-    
-    
+    color: '#004aad'
+
+
 
 
   },
@@ -112,12 +283,12 @@ const styles = StyleSheet.create({
 
   },
   item: {
-   
+
 
     margin: 8,
     padding: 8,
     borderRadius: 6,
-    backgroundColor: '#F81250',
+    backgroundColor: '#004aad',
 
 
 
@@ -134,10 +305,16 @@ const styles = StyleSheet.create({
     maxWidth: 30,
     width: 30,
     height: 30,
-    marginTop: 10,
+
     marginHorizontal: 30,
+    alignItems: "center",
+    alignContent: "center",
+    justifyContent: "center",
     //backgroundColor: 'orange'
   },
 
 
 });
+
+
+export default AddWorkOutTask;

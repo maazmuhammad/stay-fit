@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, StyleSheet, Text, Button, TouchableOpacity, Pressable, Image, SafeAreaView, Alert, useEffect } from 'react-native';
+import React, { useRef, useEffect } from 'react';
+import { View, StyleSheet, Text, Button, TouchableOpacity, Pressable, Image, SafeAreaView, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import {
     GoogleSignin,
@@ -12,6 +12,14 @@ import { connect } from 'react-redux';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 //import { GoogleSignin } from '@react-native-google-signin/google-signin';
+
+import mobileAds from 'react-native-google-mobile-ads';
+
+mobileAds()
+  .initialize()
+  .then(adapterStatuses => {
+    // Initialization complete!
+  });
 
 
 
@@ -38,7 +46,8 @@ GoogleSignin.configure({
 const Home1 = (props) => {
 
     // useEffect(() => {
-    //     setUserData();
+       
+        
     // }, [])
 
 
@@ -53,18 +62,19 @@ const Home1 = (props) => {
 
     const signIn = async () => {
         try {
-            await GoogleSignin.hasPlayServices();
+           await GoogleSignin.hasPlayServices();
             if (props.loginType === 'GOOGLE') {
                 const userInfo = await GoogleSignin.getTokens();
-               // console.log(userInfo.accessToken, 'userInfo')
+                console.log(userInfo.accessToken, 'userInfo check 2')
                 props.setAccessToken(userInfo.accessToken)
                 navigation.navigate("Home")
             }
             else {
+                await GoogleSignin.hasPlayServices();
                 const { idToken } = await GoogleSignin.signIn()
                 if (idToken) {
                     const userInfo = await GoogleSignin.getTokens();
-                  // console.log(userInfo.accessTokens, 'userInfo')
+                     console.log(userInfo.accessToken, 'userInfo check 3')
                     props.setAccessToken(userInfo.accessToken)
                     navigation.navigate("Home")
                 }
@@ -83,7 +93,7 @@ const Home1 = (props) => {
                 // play services not available or outdated
             } else {
                 // some other error happened
-                console.log(error, error.code, error.message)
+                console.log(error, error.code, error.message,"check1")
             }
         }
         //  navigation.navigate('Home')
@@ -114,14 +124,14 @@ const Home1 = (props) => {
 
         <View style={{ flex: 1, }}>
 
-            <View style={{ backgroundColor: 'black' }}>
+            <View style={{ backgroundColor: '#AAEAFF' }}>
 
 
-                <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
-                    <View style={{ backgroundColor: '#F81250', height: 50, width: '90%', marginTop: 10, borderRadius: 10, marginHorizontal: 20, }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <View style={{ backgroundColor: '#004aad', width: '90%', marginTop: 10, borderRadius: 10, marginHorizontal: 20, padding: '3%' }}>
                         <View style={{ flexDirection: 'row' }}>
 
-                            <Pressable style={{ right: 20 }}
+                            <Pressable style={{}}
                                 onPress={() => navigation.openDrawer()}
                             >
                                 <Image
@@ -130,7 +140,7 @@ const Home1 = (props) => {
                                 />
 
                             </Pressable>
-                            <Text style={{ fontSize: 28, fontWeight: 'bold', paddingLeft: 10, color: 'white', right: 25, left: 20 }}>Home</Text>
+                            <Text style={{ fontSize: 25, fontWeight: 'bold', color: 'white', width: "90%", textAlign: 'center' }}>Home</Text>
                         </View>
                     </View>
                 </View>
@@ -146,12 +156,28 @@ const Home1 = (props) => {
                 <TouchableOpacity
                     onPress={() => signIn()}
                     style={styles.roundButton2}>
-                    <Text style={{ fontSize: 31, textAlign: "center", fontWeight: 'bold', color: 'white' }}>Activity Summary</Text>
+                    <Image
+                        style={{
+                            width: 100,
+                            height: 100,
+                            //marginHorizontal: 10,
+                        }}
+                        source={require('../assests/image/lifestyle.png')}
+                    />
+                    <Text style={{ fontSize: 24, textAlign: "center", fontWeight: 'bold', color: '#AAEAFF', textAlign: 'center' }}>Activity Summary</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => navigatetoSmartNutrition()}
                     style={styles.roundButton2}>
-                    <Text style={{ fontSize: 31, textAlign: "center", fontWeight: 'bold', color: 'white' }}>Smart Nutrition</Text>
+                        <Image
+                        style={{
+                            width: 100,
+                            height: 100,
+                            //marginHorizontal: 10,
+                        }}
+                        source={require('../assests/image/nutritionist.png')}
+                    />
+                    <Text style={{ fontSize: 24, textAlign: "center", fontWeight: 'bold', color: '#AAEAFF', textAlign: 'center' }}>Smart Nutritionist</Text>
                 </TouchableOpacity>
 
             </View>
@@ -168,25 +194,26 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'black'
+        backgroundColor: '#AAEAFF'
     },
 
     roundButton2: {
         marginTop: 20,
-        width: 180,
-        height: 180,
+        width: '80%',
+        height: 200,
         justifyContent: 'center',
         alignItems: 'center',
         padding: 10,
-        borderRadius: 100,
-        backgroundColor: '#F81250',
+        borderRadius: 20,
+        backgroundColor: '#004aad',
+        elevation: 20,
+
     },
     button1: {
         maxWidth: 30,
         width: 30,
         height: 30,
-        marginTop: 10,
-        marginHorizontal: 30,
+        // marginHorizontal: 30,
         //backgroundColor: 'orange'
     },
 

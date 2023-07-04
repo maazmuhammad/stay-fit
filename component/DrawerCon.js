@@ -52,7 +52,11 @@ const OnLogoutPressed = async (props) => {
 
 }
 
-const ConnectWallet = () => { }
+const ConnectWallet = () => {
+
+
+ }
+
 
 
 
@@ -122,7 +126,7 @@ const DrawerCon = (props) => {
 
             <View style={{ flexDirection: 'row' }} >
 
-                <View style={{ backgroundColor: '#F81250', height: 40, width: 150, marginTop: 20, borderRadius: 10, left: 110, flexDirection: 'row', alignItems: 'center' }}>
+                <View style={{ backgroundColor: '#5d90d4', height: 40, width: 150, marginTop: 20, borderRadius: 10, left: 110, flexDirection: 'row', alignItems: 'center' }}>
 
                     <Image
                         style={{
@@ -132,61 +136,105 @@ const DrawerCon = (props) => {
                             marginTop: 5,
                             marginHorizontal: 10,
                         }}
-                        source={require('../assests/image/donate.png')}
+                        source={require('../assests/image/dollar.png')}
                     />
 
-                    <Text style={{ fontSize: 25, fontWeight: 'bold', color: 'black', paddingLeft: 10, marginBottom: 0, }}>
+                    <Text style={{ fontSize: 25, fontWeight: 'bold', color: 'white', paddingLeft: 10, marginBottom: 0, }}>
                         {coin}
                     </Text>
 
 
                 </View>
             </View>
-            <Text style={{ fontSize: 30, fontWeight: 'bold', marginTop: 20, marginBottom: 20, padding: 10, color: 'red' }}>
-                Hey! {auth().currentUser.displayName}
+            <View  style={{ flexDirection: 'row', alignItems:'center' }}>
+            <Image
+                    style={{ height: 50, width: 50 }}
+                    source={require('../assests/image/user.png')}
+                />
+
+            <Text style={{ fontSize: 17, fontWeight: 'bold', marginTop: 20, marginBottom: 20, padding: 10, color: '#004aad' }}>
+                Hey!!  {auth().currentUser.displayName}
             </Text>
-
-            <Pressable onPress={() => props.navigation.navigate('SetGoal')} style={{ marginHorizontal: 20, flexDirection: 'row', marginTop: 10, }}>
+            </View>
+            <Pressable onPress={() => props.navigation.navigate('Home1')} style={{ marginHorizontal: 20, flexDirection: 'row', marginTop: 10,  alignItems:'center'}}>
                 <Image
-                    style={{ height: 30, width: 30 }}
-                    source={require('../assests/image/run.png')}
+                    style={{ height: 50, width: 50 }}
+                    source={require('../assests/image/home.png')}
                 />
 
-                <Text style={{ fontSize: 17, color: '#F81250', fontWeight: 'bold', marginHorizontal: 30 }}>
-                    Set Goal
-                </Text>
-            </Pressable>
-            <Pressable onPress={() => ConnectWallet()} style={{ marginHorizontal: 20, flexDirection: 'row', marginTop: 10, }}>
-                <Image
-                    style={{ height: 30, width: 30 }}
-                    source={require('../assests/image/wallet.png')}
-                />
-
-                <Text style={{ fontSize: 17, color: '#F81250', fontWeight: 'bold', marginHorizontal: 30 }}>
-                    Connect Wallet
-                </Text>
-            </Pressable>
-            <Pressable onPress={() => props.navigation.navigate('DailyTask')} style={{ marginHorizontal: 20, flexDirection: 'row', marginTop: 10, }}>
-                <Image
-                    style={{ height: 30, width: 30 }}
-                    source={require('../assests/image/ballot.png')}
-                />
-
-                <Text style={{ fontSize: 17, color: '#F81250', fontWeight: 'bold', marginHorizontal: 30 }}>
-                    Add Daily Task
-                </Text>
-            </Pressable><Pressable onPress={() => props.navigation.navigate('WorkoutTask')} style={{ marginHorizontal: 20, flexDirection: 'row', marginTop: 10, }}>
-                <Image
-                    style={{ height: 30, width: 30 }}
-                    source={require('../assests/image/ballot.png')}
-                />
-
-                <Text style={{ fontSize: 17, color: '#F81250', fontWeight: 'bold', marginHorizontal: 30 }}>
-                    Add Workout Task
+                <Text style={{ fontSize: 20, color: '#5d90d4', fontWeight: 'bold', marginHorizontal: 10,marginTop: 10, }}>
+                    Home
                 </Text>
             </Pressable>
 
-            <Button style={{ marginBottom: 15, borderRadius: 20, width: '50%', marginHorizontal: 60, alignItems: 'center', marginTop: 300, color: '#F81250' }} title="Logout" color='#F81250' onPress={() => OnLogoutPressed(props.navigation.navigate('Login'))} />
+            <Pressable onPress={() => props.navigation.navigate('SetGoal')} style={{ marginHorizontal: 20, flexDirection: 'row', marginTop: 10,  alignItems:'center'}}>
+                <Image
+                    style={{ height: 50, width: 50 }}
+                    source={require('../assests/image/target.png')}
+                />
+
+                <Text style={{ fontSize: 20, color: '#5d90d4', fontWeight: 'bold', marginHorizontal: 10,marginTop: 10, }}>
+                    Set Goal.
+                </Text>
+            </Pressable>
+            <Pressable onPress={() => props.navigation.navigate('Meta')} style={{ marginHorizontal: 20, flexDirection: 'row', marginTop: 10,  alignItems:'center'}}>
+                <Image
+                    style={{ height: 50, width: 50 }}
+                    source={require('../assests/image/meta.png')}
+                />
+
+                <Text style={{ fontSize: 20, color: '#5d90d4', fontWeight: 'bold', marginHorizontal: 10 }}>
+                    Create MetaMask Wallet.
+                </Text>
+            </Pressable>
+
+            <Pressable  onPress={() => props.navigation.navigate('Adds')} style={{ marginHorizontal: 20, flexDirection: 'row', marginTop: 10,  alignItems:'center'}}>
+                <Image
+                    style={{ height: 50, width: 50 }}
+                    source={require('../assests/image/adv.png')}
+                />
+
+                <Text style={{ fontSize: 20, color: '#5d90d4', fontWeight: 'bold', marginHorizontal: 10 }}>
+                    Watch & Earn
+                </Text>
+            </Pressable>
+
+            <Pressable onPress={() => props.navigation.navigate('Wallet')} style={{ marginHorizontal: 20, flexDirection: 'row', marginTop: 10,  alignItems:'center'}}>
+                <Image
+                    style={{ height: 50, width: 50 }}
+                    source={require('../assests/image/crypto.png')}
+                />
+
+                <Text style={{ fontSize: 20, color: '#5d90d4', fontWeight: 'bold', marginHorizontal: 10 }}>
+                    Connect Wallet.
+                </Text>
+            </Pressable>
+
+            <Pressable onPress={() => props.navigation.navigate('DailyTask')} style={{ marginHorizontal: 20, flexDirection: 'row', marginTop: 10,alignItems:'center' }}>
+                <Image
+                    style={{ height: 50, width: 50 }}
+                    source={require('../assests/image/ballot1.png')}
+                />
+
+                <Text style={{ fontSize: 20, color: '#5d90d4', fontWeight: 'bold', marginHorizontal: 10 }}>
+                    Add Daily Task.
+                </Text>
+            </Pressable><Pressable onPress={() => props.navigation.navigate('WorkoutTask')} style={{ marginHorizontal: 20, flexDirection: 'row', marginTop: 10,alignItems:'center' }}>
+                <Image
+                    style={{ height: 50, width: 50 }}
+                    source={require('../assests/image/ballot1.png')}
+                />
+
+                <Text style={{ fontSize: 20, color: '#5d90d4', fontWeight: 'bold', marginHorizontal: 10 }}>
+                    Add Workout Task.
+                </Text>
+            </Pressable>
+
+            
+            
+            
+
+            <Button style={{ marginBottom: 15, borderRadius: 20, width: '50%', marginHorizontal: 60, alignItems: 'center', color: 'white',marginTop:80 }} title="Logout" color='#004aad' onPress={() => OnLogoutPressed(props.navigation.navigate('Login'))} />
 
 
 

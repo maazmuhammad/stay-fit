@@ -122,7 +122,7 @@ const RegisterSrcee = () => {
 
     return (
         <View style={styles.container}>
-            <Image source={require('../assests/image/logo.jpg')}
+            <Image source={require('../assests/image/logo11.png')}
                 resizeMode="contain"
                 style={styles.logo}
             />
@@ -141,6 +141,7 @@ const RegisterSrcee = () => {
 
 
 
+                <Button title="Create Account" onPress={() => OnCreateAccount(Email, Password)} style={{ width: "90%", marginBottom: 10, backgroundColor: '#004aad', marginTop: 10 }} />
 
 
             <Text style={styles.text3}>OR REGISTER WITH</Text>
@@ -199,7 +200,6 @@ const RegisterSrcee = () => {
 
             </View>
 
-            <Button title="Create Account" onPress={() => OnCreateAccount(Email, Password)} style={{ width: "90%", marginBottom: 20, backgroundColor: '#b30000' }} />
 
 
 
@@ -207,8 +207,8 @@ const RegisterSrcee = () => {
 
 
             <View style={{ flexDirection: 'row', alignItems: 'center', }}>
-                <Text style={{ fontSize: 16, color: '#ff6666', }} >Already have an account?</Text>
-                <Button variant="text" title="Sign In" color='#b30000' onPress={() => OnSigninPressed()} />
+                <Text style={{ fontSize: 16, color: '#5d90d4', fontStyle:'italic',fontWeight: 'bold', }} >Already have an account?</Text>
+                <Button variant="text" title="Sign In" color='#004aad' onPress={() => OnSigninPressed()} />
             </View>
 
 
@@ -227,8 +227,9 @@ const RegisterSrcee = () => {
 const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
-        flex: 1,
+        //flex: 1,
         backgroundColor: 'white',
+        height:'100%'
     },
     logo: {
         width: 200,
@@ -246,7 +247,7 @@ const styles = StyleSheet.create({
     },
     text1: {
         fontSize: 15,
-        color: '#ff6666',
+        color: '#5d90d4',
         fontWeight: 'bold',
 
     },
@@ -254,15 +255,16 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignContent: 'center',
         fontSize: 25,
-        color: '#b30000',
+        color: '#004aad',
         fontWeight: 'bold',
         textAlign: 'center'
     },
     text3: {
         fontSize: 16,
-        color: '#ff6666',
+        color: '#004aad',
         fontWeight: 'bold',
         marginTop: 5,
+        fontStyle:'italic'
 
 
 

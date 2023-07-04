@@ -75,7 +75,7 @@ const SmartNutrition = () => {
             if (Url) {
 
 
-                const { data } = await axios.post('https://vision.googleapis.com/v1/images:annotate?key=AIzaSyCBtcqBTKDPmgbcgg8oGn2XmHF8srnoBS8',
+                const { data } = await axios.post('https://vision.googleapis.com/v1/images:annotate?key=AIzaSyBlhJ4hz7I--0bXggs-PjZ72F3g5W9BNB0',
                     {
                         "requests": [
                             {
@@ -99,20 +99,21 @@ const SmartNutrition = () => {
 
 
                 )
-                // console.log(data, 'api response')
+                console.log(data, 'api response')
                 console.log(data.responses[0].labelAnnotations)
+                setdata(data.responses[0].labelAnnotations)
 
                 console.log(data.responses[0].labelAnnotations[0])
 
-                
-                
-                const ages =(data.responses[0].labelAnnotations[0])
-                
-                if(ages.description === 'Food'){
-                    
+
+
+                const ages = (data.responses[0].labelAnnotations[0])
+
+                if (ages.description === 'Food') {
+
                     setdata(data.responses[0].labelAnnotations)
 
-                }else{
+                } else {
                     Alert.alert('upload picture is unrelated')
                 }
 
@@ -142,31 +143,36 @@ const SmartNutrition = () => {
 
 
     return (
-        <View style={{ backgroundColor: 'black', flex: 1 }}>
+        <View style={{ backgroundColor: '#AAEAFF', flex: 1 }}>
             {/* <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
                 <View style={{ backgroundColor: '#F81250', height: 50, width:'90%', marginTop: 10, borderRadius: 10, marginHorizontal: 20,alignItems: 'center' }}>
                     <Text style={{ fontSize: 34 , fontWeight: 'bold', paddingLeft: 10, color:'white' }}>Smart Nutrition</Text>
                 </View>
             </View> */}
 
-            <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
-                <View style={{ backgroundColor: '#F81250', height: 50, width: '90%', marginTop: 10, borderRadius: 10, marginHorizontal: 20, }}>
-                    <View style={{ flexDirection: 'row' }}>
+            <View style={{ backgroundColor: '#AAEAFF' }}>
 
-                        <Pressable style={{ right: 20 }}
-                            onPress={() => navigation.openDrawer()}
-                        >
-                            <Image
-                                style={styles.button1}
-                                source={require('../assests/image/menu.png')}
-                            />
 
-                        </Pressable>
-                        <Text style={{ fontSize: 28, fontWeight: 'bold', color: 'white' }}>Smart Nutrition</Text>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <View style={{ backgroundColor: '#004aad', width: '90%', marginTop: 10, borderRadius: 10, marginHorizontal: 20, padding: '3%' }}>
+                        <View style={{ flexDirection: 'row' }}>
 
+                            <Pressable style={{}}
+                                onPress={() => navigation.openDrawer()}
+                            >
+                                <Image
+                                    style={styles.button1}
+                                    source={require('../assests/image/menu.png')}
+                                />
+
+                            </Pressable>
+                            <Text style={{ fontSize: 25, fontWeight: 'bold', color: 'white', width: "90%", textAlign: 'center' }}>Smart Nutritionist</Text>
+                        </View>
                     </View>
                 </View>
+
             </View>
+
             <View style={{ alignItems: 'center', marginTop: 20 }}>
                 <TouchableHighlight
                     onPress={() => uploadImage()}
@@ -189,8 +195,19 @@ const SmartNutrition = () => {
                                     source={{ uri: 'data:image/png;base64,' + Pic }}
                                     style={styles.AvatarImage}
                                 />
+
                                 :
-                                <Text style={[styles.AvatarImage, { color: 'grey', textAlign: 'center', marginVertical: 140, fontSize: 30, fontWeight: 'bold' }]}>Upload Image</Text>
+                                <View style={{alignItems:'center',marginTop:50}}>
+                                    <Image
+                                        style={{
+                                            width: 100,
+                                            height: 100,
+                                        }}
+                                        source={require('../assests/image/upload.png')}
+                                    />
+
+                                    <Text style={[styles.AvatarImage, { color: 'blue', textAlign: 'center', fontSize: 24, fontWeight: 'bold' }]}>Upload Image</Text>
+                                </View>
                         }
 
                     </View>
@@ -207,9 +224,9 @@ const SmartNutrition = () => {
                 {
                     isloading
                         ?
-                        <ActivityIndicator size={'large'} color='white' />
+                        <ActivityIndicator size={'large'} color='#004aad' />
                         :
-                        <Button mode='contained' onPress={() => UploadtoStorage()} style={{ backgroundColor: '#F81250' }}>
+                        <Button mode='contained' onPress={() => UploadtoStorage()} style={{ backgroundColor: '#004aad' }}>
                             Analyze
                         </Button>
                 }
@@ -258,15 +275,14 @@ const styles = StyleSheet.create({
         maxWidth: 30,
         width: 30,
         height: 30,
-        marginTop: 10,
-        marginHorizontal: 30,
-        //backgroundColor: 'orange'
     },
     Avatar: {
         backgroundColor: 'white',
         height: 300,
         width: 300,
         borderRadius: 300,
+        alignItems:'center'
+        
     },
 
     AvatarImage: {
@@ -283,7 +299,7 @@ const styles = StyleSheet.create({
         margin: 8,
         padding: 8,
         borderRadius: 6,
-        backgroundColor: '#F81250',
+        backgroundColor: '#004aad',
 
     },
 

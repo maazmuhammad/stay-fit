@@ -27,13 +27,13 @@ const Home = (props) => {
 
     const data = {
         labels: ["Run"], // optional
-        data: [(props?.steps||0)/10000]
+        data: [(props?.steps || 0) / 10000]
     };
     const data1 = {
         labels: ["12:00 am", "6:00 am", "12:00 pm", "6:00 pm"],
         datasets: [
             {
-                data: [(props?.steps||0)/10000]
+                data: [(props?.steps || 0) / 10000]
             }
         ]
     };
@@ -46,12 +46,13 @@ const Home = (props) => {
     const chartConfig = {
         backgroundGradientFrom: "#1E2923",
         backgroundGradientFromOpacity: 0,
-        backgroundGradientTo: "#08130D",
+        backgroundGradientTo: "#AAEAFF",
         backgroundGradientToOpacity: 0.5,
-        color: (opacity = 1) => `rgba(248, 18, 80,${opacity})`,
+        color: (opacity = 1) => `rgba(0, 75, 173,${opacity})`,
         strokeWidth: 2, // optional, default 3
         barPercentage: 0.5,
-        useShadowColorFromDataset: false // optional
+        useShadowColorFromDataset: false, // optional
+
     };
 
     const graphStyle = {
@@ -70,7 +71,7 @@ const Home = (props) => {
     }
 
 
-    
+
 
 
 
@@ -90,14 +91,14 @@ const Home = (props) => {
     return (
 
         <View style={styles.container}>
-            <View>
+            <View style={{ backgroundColor: '#AAEAFF' }}>
 
 
-                <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
-                    <View style={{ backgroundColor: '#F81250', height: 50, width: '90%', marginTop: 10, borderRadius: 10, marginHorizontal: 20, }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <View style={{ backgroundColor: '#004aad', width: '90%', marginTop: 10, borderRadius: 10, marginHorizontal: 20, padding: '3%' }}>
                         <View style={{ flexDirection: 'row' }}>
 
-                            <Pressable style={{ right: 20 }}
+                            <Pressable style={{}}
                                 onPress={() => navigation.openDrawer()}
                             >
                                 <Image
@@ -106,123 +107,129 @@ const Home = (props) => {
                                 />
 
                             </Pressable>
-                            <Text style={{ fontSize: 28, fontWeight: 'bold', paddingLeft: 10, color: 'white', right: 25, }}>Activity Summary</Text>
+                            <Text style={{ fontSize: 25, fontWeight: 'bold', color: 'white', width: "90%", textAlign: 'center' }}>Activity Summary</Text>
                         </View>
                     </View>
                 </View>
 
             </View>
-            <View style={{ marginTop: 20 }}>
-                <View style={{ height: 300 }}>
+            <View style={{ height: 250, width: '90%', marginTop: 20, marginBottom: 20, alignContent: 'center' }}>
+                <ProgressChart
+                    data={data}
+                    width={screenWidth}
+                    height={250}
+                    strokeWidth={50}
+                    radius={90}
+                    chartConfig={chartConfig}
+                    hideLegend={false}
+                />
 
-
-                    <ProgressChart
-                        data={data}
-                        width={screenWidth}
-                        height={250}
-                        strokeWidth={50}
-                        radius={90}
-                        chartConfig={chartConfig}
-                        hideLegend={false}
-                    />
-
-                </View>
-                <View style={{ top: -30 }} >
-
-
-                    <BarChart
-                        style={graphStyle}
-                        data={data1}
-                        width={screenWidth}
-                        height={160}
-                        chartConfig={chartConfig}
-
-                    />
-
-                </View>
             </View>
 
 
-            <View style={{ flexDirection: 'row', marginHorizontal: 15 }}>
-                <View style={{ backgroundColor: '#F81250', height: 60, width: 150, borderRadius: 8, marginHorizontal: 10, }}>
-                    <Text style={{ fontSize: 18, fontWeight: 'bold', paddingLeft: 10, color: 'white' }}>
-                        Steps:
+            <View style={{ backgroundColor: '#004aad', height: 80, width: '90%', borderRadius: 8, marginHorizontal: 10, }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
 
-
-
-                    </Text>
-                    <Text style={{ fontSize: 26, fontWeight: 'bold', color: 'white', paddingLeft: 10, }}>
-                        {props.steps}
-
-
-
-                    </Text>
-                </View>
-
-                <View style={{ backgroundColor: 'red', height: 60, width: 150, borderRadius: 8, flexDirection: 'row', alignItems: 'center' }}>
                     <Image
                         style={{
-                            width: 40,
-                            height: 40,
-                            marginTop: 10,
+                            width: 50,
+                            height: 50,
+                            marginTop: 15,
                             marginHorizontal: 10,
                         }}
-                        source={require('../assests/image/heart.png')}
+                        source={require('../assests/image/footprint.png')}
                     />
-                    {
-                        props?.heartpoint
-                        &&
-
-                        <Text style={{ fontSize: 26, fontWeight: 'bold', color: 'white', }}>
-                            {props.heartpoint}
-                        </Text>
-                    }
-                    <Text style={{ fontSize: 26, fontWeight: 'bold', color: 'white', textAlign: "center", }}>
-                        pts
-
-
+                    <Text style={{
+                        fontSize: 30, fontWeight: 'bold', color: '#AAEAFF', paddingLeft: 10, textAlign: 'center', marginHorizontal: 10,
+                    }}>
+                        {props.steps}
 
                     </Text>
-
-                </View>
-            </View>
-            <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10, marginHorizontal: 15 }}>
-                <View style={{ backgroundColor: '#F81250', height: 60, width: 150, marginTop: 10, borderRadius: 8, marginHorizontal: 10, }}>
-                    <Text style={{ fontSize: 18, fontWeight: 'bold', paddingLeft: 10, color: 'white' }}>Calories:
-
+                    <Text style={{ fontSize: 28, fontWeight: 'bold', color: '#AAEAFF' }}>
+                        Steps
                     </Text>
-                    {
-                        props?.calories
-                        &&
-                        <Text style={{ fontSize: 26, fontWeight: 'bold', paddingLeft: 10, color: 'white', }}>
-
-                            {(props.calories).toFixed()}
-                        </Text>
-                    }
-                </View>
-
-                <View style={{ backgroundColor: '#F81250', height: 60, width: 150, marginTop: 10, borderRadius: 8, }}>
-                    <Text style={{ fontSize: 18, fontWeight: 'bold', paddingLeft: 10, color: 'white' }}>Distance:</Text>
-                    <View style={{ flexDirection: 'row', textAlign: 'center' }}>
-
-                        {props?.distance
-                            &&
-
-                            <Text style={{ fontSize: 26, fontWeight: 'bold', paddingLeft: 10, color: 'white', }}>
-                                {(props.distance).toFixed()}
-                            </Text>
-                        }
-                        <Text style={{ fontSize: 26, fontWeight: 'bold', color: 'white', }}>
-                            m
-                        </Text>
-                    </View>
-
-
                 </View>
             </View>
 
+            <View style={{ backgroundColor: '#004aad', height: 80, width: "90%", borderRadius: 8, flexDirection: 'row', alignItems: 'center', marginTop: 10, marginHorizontal: 10 }}>
+                <Image
+                    style={{
+                        width: 50,
+                        height: 50,
+                        marginTop: 10,
+                        marginHorizontal: 10,
+                    }}
+                    source={require('../assests/image/heart1.png')}
+                />
+                {
+                    props?.heartpoint
+                    &&
 
-            {/* <Button color='#F81250' title="BACK" onPress={() => back()} /> */}
+                    <Text style={{ fontSize: 28, fontWeight: 'bold', color: 'white', }}>
+                        {props.heartpoint} pts
+                    </Text>
+                }
+
+            </View>
+            <View style={{ backgroundColor: '#004aad', height: 80, width: "90%", borderRadius: 8, flexDirection: 'row', alignItems: 'center', marginTop: 10, marginHorizontal: 10 }}>
+                <Image
+                    style={{
+                        width: 50,
+                        height: 50,
+                        marginTop: 10,
+                        marginHorizontal: 10,
+                    }}
+                    source={require('../assests/image/calories.png')}
+                />
+
+                {
+                    props?.calories
+                    &&
+                    <Text style={{ fontSize: 30, fontWeight: 'bold', paddingLeft: 10, color: '#AAEAFF', textAlign: 'center', marginHorizontal: 10 }}>
+
+                        {(props.calories).toFixed()}
+                    </Text>
+                }
+                <Text style={{ fontSize: 28, fontWeight: 'bold', color: '#AAEAFF' }}>
+                    Calories
+                </Text>
+
+
+            </View>
+            <View style={{ backgroundColor: '#004aad', height: 80, width: "90%", borderRadius: 8, flexDirection: 'row', alignItems: 'center', marginTop: 10, marginHorizontal: 10 }}>
+                <Image
+                    style={{
+                        width: 50,
+                        height: 50,
+                        marginTop: 10,
+                        marginHorizontal: 10,
+                    }}
+                    source={require('../assests/image/distance.png')}
+                />
+
+                
+            {props?.distance
+                &&
+
+                <Text style={{ fontSize: 28, fontWeight: 'bold', paddingLeft: 10, color: '#AAEAFF', marginHorizontal: 10}}>
+                    {(props.distance).toFixed()} m
+                </Text>
+            }
+                <Text style={{ fontSize: 28, fontWeight: 'bold', color: '#AAEAFF' }}>
+                    Distance
+                </Text>
+
+
+            </View>
+
+
+
+
+
+
+
+
+
         </View>
 
 
@@ -234,7 +241,7 @@ const styles = StyleSheet.create({
     container: {
         // alignItems: 'center',
         flex: 1,
-        backgroundColor: 'black',
+        backgroundColor: '#AAEAFF',
 
 
 
@@ -250,16 +257,13 @@ const styles = StyleSheet.create({
 
     },
     button1: {
+        maxWidth: 30,
         width: 30,
         height: 30,
-        marginTop: 10,
-
-        marginHorizontal: 30,
-
-
-
-        //  backgroundColor: 'orange'
+        // marginHorizontal: 30,
+        //backgroundColor: 'orange'
     },
+
 })
 const mapStateToProps = (store) => (
     {
@@ -281,7 +285,7 @@ const mapStateToProps = (store) => (
 
 const mapDispatchToProps = (dispatch) => ({
     GetFitnessData: (token) => dispatch(GetUserFitnessData(token))
-    
+
 
 
 });

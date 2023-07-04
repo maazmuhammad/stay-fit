@@ -92,41 +92,46 @@ const SetGoal = () => {
     const chartConfig = {
         backgroundGradientFrom: "#1E2923",
         backgroundGradientFromOpacity: 0,
-        backgroundGradientTo: "#08130D",
+        backgroundGradientTo: "#AAEAFF",
         backgroundGradientToOpacity: 0.5,
-        color: (opacity = 1) => `rgba(248, 18, 80,${opacity})`,
+        color: (opacity = 1) => `rgba(0, 75, 173,${opacity})`,
         strokeWidth: 2, // optional, default 3
         barPercentage: 0.5,
-        useShadowColorFromDataset: false // optional
+        useShadowColorFromDataset: false, // optional
+
     };
 
 
 
 
-
     return (
-        <View style={{ backgroundColor: 'black', flex: 1 }}>
+        <View style={{ backgroundColor: '#AAEAFF', flex: 1 }}>
 
 
 
 
-            <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
-                <View style={{ backgroundColor: '#F81250', height: 50, width: '90%', marginTop: 10, borderRadius: 10, marginHorizontal: 20, }}>
-                    <View style={{ flexDirection: 'row' }}>
+<View style={{ backgroundColor: '#AAEAFF' }}>
 
-                        <Pressable style={{ right: 20 }}
-                            onPress={() => navigation.openDrawer()}
-                        >
-                            <Image
-                                style={styles.button1}
-                                source={require('../assests/image/menu.png')}
-                            />
 
-                        </Pressable>
-                        <Text style={{ fontSize: 30, fontWeight: 'bold', paddingLeft: 10, color: 'white' }}>Set Goal</Text>
-                    </View>
-                </View>
-            </View>
+<View style={{ flexDirection: 'row', alignItems: 'center' }}>
+    <View style={{ backgroundColor: '#004aad', width: '90%', marginTop: 10, borderRadius: 10, marginHorizontal: 20, padding: '3%' }}>
+        <View style={{ flexDirection: 'row' }}>
+
+            <Pressable style={{}}
+                onPress={() => navigation.openDrawer()}
+            >
+                <Image
+                    style={styles.button1}
+                    source={require('../assests/image/menu.png')}
+                />
+
+            </Pressable>
+            <Text style={{ fontSize: 25, fontWeight: 'bold', color: 'white', width: "90%", textAlign: 'center' }}>Set Goal</Text>
+        </View>
+    </View>
+</View>
+
+</View>
 
 
             <View style={{}}>
@@ -143,10 +148,19 @@ const SetGoal = () => {
             </View>
             <View style={{ justifyContent: 'center', alignContent: 'center', flex: 1 }}>
 
-                <View>
-                    <Text style={{ fontSize: 40, fontWeight: 'bold', color: 'red', marginTop: 10, marginHorizontal: 15, textAlign: 'center' }}>Set Steps:</Text>
-                    <Text style={{ fontSize: 20, fontWeight: 'bold', color: 'white', marginTop: 10, marginHorizontal: 10, textAlign: 'center' }}>Set your numbers of steps for today</Text>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Image
+                        style={{
+                            width: 80,
+                            height: 80,
+                          
+                            marginHorizontal: 10,
+                        }}
+                        source={require('../assests/image/footprint.png')}
+                    />
+                    <Text style={{ fontSize: 40, fontWeight: 'bold', color: '#004aad', marginTop: 10, marginHorizontal: 15, textAlign: 'center' }}>Set Steps:</Text>
                 </View>
+                    <Text style={{ fontSize: 20, fontWeight: 'bold', color: 'black', marginTop: 10, marginHorizontal: 10, textAlign: 'center' }}>Set your numbers of steps for today</Text>
                 <View style={{ flexDirection: 'row', alignItems: 'center', padding: 20 }}>
 
                     <TextInput
@@ -157,15 +171,15 @@ const SetGoal = () => {
 
                         style={{
                             borderWidth: 6,
-                            borderColor: '#F81250',
+                            borderColor: '#004aad',
                             width: '70%',
                             marginRight: 8,
                             padding: 8,
                             borderRadius: 10,
                             fontSize: 32,
                             fontWeight: 'bold',
-                            color: "white",
-                            placeholdertfontSize: '16'
+                            color: '#004aad',
+                            
                         }}
                     >
 
@@ -177,7 +191,7 @@ const SetGoal = () => {
                         style={styles.roundButton2}
 
                     >
-                        <Text style={{ fontWeight: 'bold', color: '#F81250', fontSize: 25, alignSelf: 'center' }}>Set</Text>
+                        <Text style={{ fontWeight: 'bold', color: '#004aad', fontSize: 20, alignSelf: 'center' }}>Set</Text>
                     </TouchableOpacity>
                 </View>
 
@@ -198,7 +212,7 @@ const styles = StyleSheet.create({
         padding: 15,
         borderRadius: 100,
         borderWidth: 6,
-        borderColor: '#F81250',
+        borderColor: '#004aad',
         marginHorizontal: 20
 
     },
@@ -206,8 +220,6 @@ const styles = StyleSheet.create({
         maxWidth: 30,
         width: 30,
         height: 30,
-        marginTop: 10,
-        marginHorizontal: 30,
         //backgroundColor: 'orange'
     },
     inputContainer: {

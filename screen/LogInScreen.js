@@ -1,73 +1,44 @@
 import React, { useRef, useEffect } from 'react';
-import { View, StyleSheet, Image, Text, TouchableOpacity, Keyboard, Pressable, ActivityIndicator, } from 'react-native';
+import { View, StyleSheet, Image, Text, Pressable } from 'react-native';
 import { TextInput, Button } from "@react-native-material/core";
-import RegisterSrcee from '../screen/RegisterScree';
 import { useNavigation } from '@react-navigation/native';
 import MyModal from '../component/modal';
 import auth from '@react-native-firebase/auth';
-import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
-
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { useState } from 'react';
 import { LoginManager, AccessToken } from 'react-native-fbsdk-next';
-import firestore from '@react-native-firebase/firestore';
-import axios from 'axios';
 import { setLoginType } from '../Redux/User/UserAction';
 import { connect } from 'react-redux';
 
-
-
-
-
-
-
-
 const EMAIL_REGEX = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/
 const Password_REGEX = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/
-
-
-
 const LogInScreen = (props) => {
     const inputRef = useRef(null)
     const emailinputRef = useRef(null)
-    const [Password, setPassword] = React.useState('');
-    const [Email, setEmail] = React.useState('');
+    const [Password, setPassword] = useState('');
+    const [Email, setEmail] = useState('');
     const [useData, setUserData] = useState({});
     const [userData, setUseData] = useState({})
     const [modalVisible, setModalVisible] = React.useState(false);
-
-
-
-
-    useEffect(() => {
-        //   console.log('login');
-
-    }, []);
-
-
-
     const navigation = useNavigation();
-    // const OnLoginPressed = async (Email, Password) => {
-    //     navigation.navigate('Home1')
-    // }
-
 
     const OnLoginPressed = async (Email, Password) => {
         console.log(Email, Password)
         // if (!Email.match(EMAIL_REGEX)) {
-
         //     alert("Please enter valid email")
         // }
-
         if (Email?.trim().length == 0) {
             alert("Please enter email")
         }
         // else if (!Password.match(Password_REGEX)) {
         //     alert("Invalid Password")
         // }
+        if (Password?.trim().length == 0) {
+            alert("Please enter password")
+        }
         else {
             auth().signInWithEmailAndPassword(Email, Password)
                 .then(() => {
-
                     console.log("login successful")
                     navigation.navigate('Home1');
                     emailinputRef.current.clear()
@@ -75,117 +46,89 @@ const LogInScreen = (props) => {
                     setEmail("")
                     setPassword("")
                     props.setLoginType('PASSWORD');
-
-
-
-
-
                 })
-
                 .catch((e => console.log(e)))
         }
-
-
-
-
-
-
-
-
     }
+
     const OnRegisterPressed = () => {
-
         navigation.navigate('Register')
-
     }
+
     const OnForgetPasswordPressed = () => {
-
-
         if (Email?.trim().length == 0) {
             alert("please enter email")
         }
         else if (!Email.match(EMAIL_REGEX)) {
-
             alert("please enter valid email")
         }
         else {
             auth().sendPasswordResetEmail(Email)
                 .then(() => {
                     setModalVisible(true)
-
                 }).catch(e => console.log(e))
-
-
         }
     }
+
     const onFacebookButtonPress = async () => {
         try {
-
-            // Attempt login with permissions
             const result = await LoginManager.logInWithPermissions(['public_profile', 'email']);
-
             if (result.isCancelled) {
                 throw 'User cancelled the login process';
             }
-
-            // Once signed in, get the users AccesToken
             const data = await AccessToken.getCurrentAccessToken();
-
             if (!data) {
                 throw 'Something went wrong obtaining access token';
             }
-
-            // Create a Firebase credential with the AccessToken
             const facebookCredential = auth.FacebookAuthProvider.credential(data.accessToken);
-
-            // Sign-in the user with the credential
             return auth().signInWithCredential(facebookCredential);
         } catch {
             (e => console.log(e))
         }
-
     }
-    const onGoogleButtonPress = async () => {
+
+    const onGoogleButtonPresss = async () => {
         try {
-
-            // Check if your device supports Google Play
-            await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
+            console.log("maaz")
+            GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
+            console.log("maaz1")
             // Get the users ID token
-            const { idToken } = await GoogleSignin.signIn();
-            // GoogleSignin.addScopes()
-
+            const  idToken  = await GoogleSignin.signIn();
+            console.log(idToken, "chal ja")
+            //  GoogleSignin.addScopes()
             // Create a Google credential with the token
             const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-
+            console.log("maaz3")
             // Sign-in the user with the credential
-            return auth().signInWithCredential(googleCredential);
-
+            const respone = await auth().signInWithCredential(googleCredential);
+            if (respone){
+                setUserData(respone.user);
+                props.setLoginType('GOOGLE');
+                navigation.navigate('Home');
+            }
+           
         }
         catch {
+
             (e => console.log(e))
         }
-
-
     }
+
     useEffect(() => {
         GoogleSignin.configure({
-            webClientId: '514041579955-e0rfnochttan679vtf5i6ciu05ggdqb9.apps.googleusercontent.com',
-
+            webClientId: "514041579955-e0rfnochttan679vtf5i6ciu05ggdqb9.apps.googleusercontent.com",
         });
     }, [])
 
-
     return (
-        <>
+        <View>
             <View style={styles.container}>
-                <View style={{ backgroundColor: 'white' }} >
-
-                    <Image source={require('../assests/image/logo.jpg')}
+                <View style={{}} >
+                    <Image source={require('../assests/image/logo11.png')}
                         resizeMode="contain"
                         style={styles.logo}
                     />
                 </View>
-
 
                 <View style={{}}>
                     <Text style={styles.text1}>WHAT SEEMS HARD NOW WILL ONE DAY BE,</Text>
@@ -197,61 +140,53 @@ const LogInScreen = (props) => {
                     keyboardType='Email'
                     placeholder='Email'
                     onChangeText={(Email) => setEmail(Email)}
-                    style={{ width: "90%", marginTop: 20, }}
+                    style={{
+                        width: "90%", marginTop: 20,
+                    }}
                 />
 
                 <TextInput variant="outlined" placeholder='Password' secureTextEntry={true}
                     ref={inputRef}
                     onChangeText={(Password) => setPassword(Password)} style={{
-                        width
-                            : "90%", marginTop: 5,
-                    }} />
+                        width: "90%", marginTop: 5,
+                    }}
+                />
 
+                <Button variant="text" title="Forget Password?" color="#004aad"
+                    onPress={() => OnForgetPasswordPressed()} style={{ left: 80, }}
+                />
 
+                <Button title="Login"
+                    onPress={() => OnLoginPressed(Email, Password)} style={{ width: "90%", marginTop: 10, backgroundColor: '#004aad', }}
+                />
 
-                <Button variant="text" title="Forget Password?" color="#b30000" onPress={() => OnForgetPasswordPressed()} style={{ left: 100, }} />
-
-
-
-
-                <Button title="Login" onPress={() => OnLoginPressed(Email, Password)} style={{ width: "90%", marginTop: 10, backgroundColor: '#b30000', }} />
                 <Text style={styles.text3}>OR LOGIN WITH</Text>
 
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    {/* <TouchableOpacity onPress={() => FacebookServices()}>
-                        <Image
-                            style={styles.button}
-                            source={require('../assests/image/facebook.png')}
-                        />
-                    </TouchableOpacity> */}
 
-                    {/* <TouchableOpacity onPress={() => onGoogleButtonPress().then(() => {
-                        console.log('Signed in with Google!')
-                        navigation.navigate('Home');
-                        })}>
-                        <Image
-                            style={styles.button}
-                            source={require('../assests/image/google.png')}
-                        />
-                    </TouchableOpacity> */}
+                    {/* GOOGLE BUTTON */}
 
                     <Pressable
-                        onPress={() => onGoogleButtonPress()
-                            .then(res => {
-                                console.log(res.user);
-                                setUserData(res.user);
-                                props.setLoginType('GOOGLE');
-                                navigation.navigate('Home1');
-                            })
-                            .catch(
-                                error => console.error(error))
+                        onPress={() => onGoogleButtonPresss()
+                            // .then(res => {
+                            //   //  console.log(res.user);
+                            //     // setUserData(res.user);
+                            //     // props.setLoginType('GOOGLE');
+                            //     // navigation.navigate('Home');
+                            // })
+                            // .catch(
+                            //     error => console.error(error)) 
+
                         }>
+
                         <Image
                             style={styles.button}
                             source={require('../assests/image/google.png')}
                         />
 
                     </Pressable>
+
+                    {/* FACEBOOK BUTTON */}
 
                     <Pressable
                         onPress={() => onFacebookButtonPress()
@@ -276,12 +211,12 @@ const LogInScreen = (props) => {
 
 
 
-                <Text style={{ fontSize: 16, fontWeight: 'bold', margintop: 10, marginBottom: 20, color: '#ff6666', }}>Learn</Text>
+                <Text style={{ fontSize: 16, fontWeight: 'bold', margintop: 10, marginBottom: 20, color: '#004aad', }}>Learn</Text>
 
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Text style={{ fontSize: 16, color: '#ff6666' }} >New to Stay-Fit?</Text>
+                    <Text style={{ fontSize: 16, color: '#5d90d4', fontStyle: 'italic', fontWeight: 'bold', }} >New to STAY-FIT ?</Text>
                     {/* <Button variant="text" title="Register" onPress={() => OnRegisterPressed()}  style={{fontSize: 16,  fontWeight: 'bold',}}/> */}
-                    <Button variant="text" title="Register" color="#b30000" fontWeight="bold" onPress={() => OnRegisterPressed()} />
+                    <Button variant="text" title="Register" color="#004aad" fontWeight="bold" onPress={() => OnRegisterPressed()} />
                 </View>
 
 
@@ -295,7 +230,7 @@ const LogInScreen = (props) => {
                 </MyModal>
 
             </View>
-        </>
+        </View>
     )
 
 
@@ -307,12 +242,9 @@ const LogInScreen = (props) => {
 const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
-        flex: 1,
-        backgroundColor: '#FFFFFF',
-    },
-    container1: {
-        flex: 1,
-        justifyContent: "center"
+        //flex: 1,
+        backgroundColor: 'white',
+        height: '100%'
     },
     horizontal: {
         flexDirection: "row",
@@ -322,7 +254,7 @@ const styles = StyleSheet.create({
     logo: {
         width: 200,
         height: 200,
-        marginBottom: 30,
+        marginBottom: 20,
         marginTop: 20,
 
     },
@@ -337,7 +269,7 @@ const styles = StyleSheet.create({
     },
     text1: {
         fontSize: 15,
-        color: '#ff6666',
+        color: '#5d90d4',
         fontWeight: 'bold',
 
     },
@@ -345,16 +277,17 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignContent: 'center',
         fontSize: 25,
-        color: '#b30000',
+        color: '#004aad',
         fontWeight: 'bold',
         textAlign: 'center'
     },
     text3: {
         fontSize: 16,
-        color: '#ff6666',
+        color: '#004aad',
         fontWeight: 'bold',
         marginTop: 20,
         marginBottom: 10,
+        fontStyle: 'italic'
 
 
 
@@ -384,21 +317,3 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LogInScreen);
-
-// import React from 'react';
-// import {View, StyleSheet,Text} from 'react-native';
-
-// const LogInScreen = () => {
-//     return (
-//         <View>
-//             <Text>
-//                 maaz
-//             </Text>
-//         </View>
-//     );
-// }
-
-// const styles = StyleSheet.create({})
-
-// export default LogInScreen;
-
